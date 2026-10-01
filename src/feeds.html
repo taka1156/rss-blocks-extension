@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>RSS Blocks</title>
+  <link rel="stylesheet" href="feeds.css">
+</head>
+
+<body>
+  <header>
+    <h1>RSS Blocks</h1>
+    <div class="tools">
+      <button id="addPanelToggle" type="button" aria-expanded="false" aria-controls="addPanel">＋ 追加</button>
+      <button id="addGroupBtn" class="sub">＋ グループ</button>
+      <button id="refreshBtn" class="sub">更新</button>
+      <button id="settingsToggle" class="sub" type="button" aria-haspopup="dialog">⚙
+        設定
+      </button>
+      <label class="chk"><input type="checkbox" id="thumbToggle" checked>サムネイル</label>
+      <label class="chk"><input type="checkbox" id="sideToggle" checked>記事を横で開く</label>
+    </div>
+  </header>
+  <dialog id="addPanel" aria-labelledby="addPanelTitle">
+    <div class="add-panel-head">
+      <h2 id="addPanelTitle">追加</h2>
+      <button id="addPanelClose" class="icon" type="button" aria-label="閉じる">×</button>
+    </div>
+    <div class="add-panel-body">
+      <div class="add-tabs" role="tablist" aria-label="追加する種類">
+        <button id="feedTab" type="button" role="tab" aria-controls="feedPanel" aria-selected="true">RSS追加</button>
+        <button id="shortcutTab" type="button" role="tab" aria-controls="shortcutPanel" aria-selected="false"
+          tabindex="-1">ショートカット追加</button>
+      </div>
+      <div id="feedPanel" role="tabpanel" aria-labelledby="feedTab">
+        <form id="feedForm" class="controls">
+          <input id="urlInput" type="url" placeholder="フィードURLを入力 (https://...)" required>
+          <button id="addBtn" type="submit">追加</button>
+        </form>
+      </div>
+      <div id="shortcutPanel" role="tabpanel" aria-labelledby="shortcutTab" hidden>
+        <form id="shortcutForm">
+          <input id="shortcutUrl" type="url" placeholder="ショートカットURLを入力" required>
+          <button type="submit">追加</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="settingsPanel" aria-labelledby="settingsPanelTitle">
+    <div class="add-panel-head">
+      <h2 id="settingsPanelTitle">設定のインポート／エクスポート</h2>
+      <button id="settingsClose" class="icon" type="button" aria-label="閉じる">×</button>
+    </div>
+    <div class="add-panel-body settings-body">
+      <button id="exportSettings" type="button">設定をエクスポート</button>
+      <label class="import-settings">
+        設定ファイルをインポート
+        <input id="importSettings" type="file" accept=".json,application/json">
+      </label>
+    </div>
+  </dialog>
+  <section id="shortcuts" aria-labelledby="shortcutsTitle">
+    <div class="shortcut-toolbar">
+      <h2 id="shortcutsTitle">ショートカット</h2>
+    </div>
+    <div id="shortcutList" aria-label="登録済みショートカット"></div>
+  </section>
+  <main>
+    <div class="grid" id="ungroupedGrid" data-group=""></div>
+    <div id="groups"></div>
+  </main>
+  <aside id="pane">
+    <div id="paneResizeHandle" class="pane-resize-handle" role="separator" aria-orientation="vertical"
+      aria-label="記事ペインの幅" aria-valuemin="280" aria-valuemax="1200" aria-valuenow="560" tabindex="0"></div>
+    <div id="audioBar">
+      <span id="audioTitle"></span>
+      <button id="audioClose" class="icon" title="再生を閉じる">×</button>
+      <audio id="player" controls preload="none"></audio>
+    </div>
+    <div id="articleWrap">
+      <div class="pane-head">
+        <span id="articleTitle"></span>
+        <button id="articleOpen" class="icon" title="新しいタブで開く">↗</button>
+        <button id="articleClose" class="icon" title="閉じる">×</button>
+      </div>
+      <iframe id="articleFrame"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+        referrerpolicy="no-referrer"></iframe>
+    </div>
+  </aside>
+  <script src="feeds.js"></script>
+</body>
+
+</html>
