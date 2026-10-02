@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "shortcuts": [
+    {
+      "url": "https://github.com/taka1156"
+    },
+    {
+      "url": "https://dash.cloudflare.com/login"
+    }
+  ],
+  "groups": [
+    {
+      "collapsed": false,
+      "color": "",
+      "id": "mupnjyi3",
+      "title": "PodCast"
+    },
+    {
+      "collapsed": false,
+      "color": "",
+      "id": "mupnizrm",
+      "title": "News"
+    },
+    {
+      "collapsed": false,
+      "color": "",
+      "id": "mupnbj1e",
+      "title": "技術記事"
+    }
+  ],
+  "feeds": [
+    {
+      "url": "https://feeds.megaphone.fm/TFM9640066968",
+      "title": "",
+      "color": "",
+      "group": "mupnjyi3"
+    },
+    {
+      "url": "https://feeds.turingcomplete.fm/tcfm",
+      "title": "",
+      "color": "",
+      "group": "mupnjyi3"
+    },
+    {
+      "url": "https://anchor.fm/s/107747d74/podcast/rss",
+      "title": "",
+      "color": "",
+      "group": "mupnjyi3"
+    },
+    {
+      "url": "https://news.yahoo.co.jp/rss/topics/it.xml",
+      "title": "",
+      "color": "#eb2455",
+      "group": "mupnizrm"
+    },
+    {
+      "url": "https://zenn.dev/feed",
+      "title": "",
+      "color": "#2766ec",
+      "group": "mupnbj1e"
+    },
+    {
+      "url": "https://qiita.com/popular-items/feed.atom",
+      "title": "",
+      "color": "#24eb45",
+      "group": "mupnbj1e"
+    }
+  ]
+}
