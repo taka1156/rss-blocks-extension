@@ -146,7 +146,7 @@ export function FeedCard({
             <FeedItemRow
               key={item.link || `${item.title}-${item.date}`}
               item={item}
-              isArticleOpen={openArticleUrl === item.link}
+              isArticleOpen={!!item.link && openArticleUrl === item.link}
               isAudioPlaying={playingAudioUrl === item.audio}
               onOpenArticle={handleOpenArticle}
               onPlayAudio={handlePlayAudio}

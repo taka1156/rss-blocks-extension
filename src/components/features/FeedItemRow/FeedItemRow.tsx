@@ -1,6 +1,6 @@
 import { type FeedItem, formatFeedDate } from '@/utils/feedDashboard';
 import { icon } from '../FeedCard/FeedCard.css';
-import { itemBody, itemDate, itemLink, itemRow, itemThumb } from './FeedItemRow.css';
+import { itemBody, itemDate, itemLink, itemRow, itemStatus, itemThumb } from './FeedItemRow.css';
 
 type FeedItemRowProps = {
   item: FeedItem;
@@ -32,8 +32,8 @@ export function FeedItemRow({
           }}
         >
           {item.title || item.link || '(無題)'}
-          {isArticleOpen && <span> (閲覧中)</span>}
         </a>
+        {isArticleOpen && <span className={itemStatus}>閲覧中</span>}
         {formatFeedDate(item.date) && (
           <time className={itemDate} dateTime={item.date}>
             {formatFeedDate(item.date)}
