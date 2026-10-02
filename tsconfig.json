@@ -3,9 +3,11 @@
   "baseUrl": ".",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "paths": {
     "@/*": ["src/*"]
-  }
+  },
+  "include": ["src", "setupTest.ts"]
 }

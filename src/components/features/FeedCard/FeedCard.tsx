@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useCardDragState } from '@/hooks/useCardDragState';
+import { useColorPreview } from '@/hooks/useColorPreview';
+import { useEditState } from '@/hooks/useEditState';
 import type { Feed } from '@/storage/feedDashboard';
 import { type FeedItem, formatFeedDate } from '@/utils/feedDashboard';
 import { EditForm, type EditValues } from '../EditForm/EditForm';
@@ -48,14 +50,13 @@ export function FeedCard({
   onDragStart,
   onDrop,
 }: FeedCardProps) {
-  const [editing, setEditing] = useState(false);
-  const [dragReady, setDragReady] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [previewColor, setPreviewColor] = useState<string | undefined>(undefined);
-  const borderColor = previewColor ?? feed.color;
+  const { editing, setEditing } = useEditState();
+  const { dragReady, setDragReady, isDragging, setIsDragging } = useCardDragState();
+  const { finalColor: borderColor, setPreviewColor, resetPreview } = useColorPreview(feed.color);
+
   const closeEdit = () => {
     setEditing(false);
-    setPreviewColor(undefined);
+    resetPreview();
   };
   const statusText = feedStatus?.loading ? '読み込み中…' : (feedStatus?.error ?? '');
 

@@ -22,7 +22,7 @@ export function useDashboardPersistence(
   }, [shortcuts]);
 
   const persistFlags = useCallback(
-    async (key: 'sideOpen', value: boolean) => {
+    async (value: boolean) => {
       setSideOpen(value);
     },
     [setSideOpen],

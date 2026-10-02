@@ -5,9 +5,9 @@ import { BaseInput } from '@/components/shared/BaseInput/BaseInput';
 import {
   type DashboardState,
   loadDashboardState,
+  saveDashboardFlag,
   saveDashboardState,
   saveShortcuts,
-  saveDashboardFlag,
 } from '@/storage/feedDashboard';
 import { importSettings, settingsBody } from './SettingsDialog.css';
 

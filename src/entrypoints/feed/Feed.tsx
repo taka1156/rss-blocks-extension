@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AddFeedDialog } from '@/components/features/AddFeedDialog/AddFeedDialog.js';
 import { ArticlePane } from '@/components/features/ArticlePane/ArticlePane.js';
 import { DashboardHeader } from '@/components/features/DashboardHeader/DashboardHeader.js';
@@ -82,7 +82,6 @@ export default function Feed() {
     [feedState.feeds, groupState],
   );
 
-
   return (
     <>
       <DashboardHeader
@@ -92,7 +91,7 @@ export default function Feed() {
         onAddGroup={addGroup}
         onRefresh={() => void feedRefresh.refreshAll()}
         onSideOpenChange={(checked) => {
-          void persistence.persistFlags('sideOpen', checked);
+          void persistence.persistFlags(checked);
         }}
       />
       <AddFeedDialog
@@ -116,7 +115,7 @@ export default function Feed() {
           shortcutState.loadShortcuts(nextState.shortcuts);
           setArticle({ title: '', url: '' });
           setSideOpen(nextState.sideOpen);
-          void persistence.persistFlags('sideOpen', nextState.sideOpen);
+          void persistence.persistFlags(nextState.sideOpen);
         }}
       />
       <ShortcutSection

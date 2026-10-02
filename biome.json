@@ -30,6 +30,17 @@
       "preset": "recommended"
     }
   },
+  "overrides": [
+    {
+      "includes": ["**/*.test.ts", "**/*.test.tsx"],
+      "linter": {
+        "rules": {
+          "correctness": "off",
+          "complexity": "off"
+        }
+      }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {

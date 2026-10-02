@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useCardDragState } from '@/hooks/useCardDragState';
+import { useColorPreview } from '@/hooks/useColorPreview';
+import { useEditState } from '@/hooks/useEditState';
 import type { Feed, Group } from '@/storage/feedDashboard';
 import type { FeedItem } from '@/utils/feedDashboard';
 import { EditForm, type EditValues } from '../EditForm/EditForm';
@@ -53,15 +55,18 @@ export function GroupCard({
   statusByUrl,
   itemsByUrl,
 }: GroupCardProps) {
-  const [editing, setEditing] = useState(false);
-  const [dragReady, setDragReady] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isOver, setIsOver] = useState(false);
-  const [previewColor, setPreviewColor] = useState<string | undefined>(undefined);
-  const groupColor = previewColor ?? groupData.color;
+  const { editing, setEditing } = useEditState();
+  const { dragReady, setDragReady, isDragging, setIsDragging, isOver, setIsOver } =
+    useCardDragState();
+  const {
+    finalColor: groupColor,
+    setPreviewColor,
+    resetPreview,
+  } = useColorPreview(groupData.color);
+
   const closeEdit = () => {
     setEditing(false);
-    setPreviewColor(undefined);
+    resetPreview();
   };
 
   return (
