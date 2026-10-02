@@ -39,5 +39,5 @@ export default defineConfig({
     },
     plugins: [vanillaExtractPlugin()],
   }),
-  modules: ['@wxt-dev/module-react'],
+  modules: ['@wxt-dev/module-react', '@wxt-dev/auto-icons'],
 });
