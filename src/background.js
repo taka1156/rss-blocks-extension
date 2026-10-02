@@ -30,3 +30,20 @@ async function setupRules() {
 }
 chrome.runtime.onInstalled.addListener(setupRules);
 chrome.runtime.onStartup.addListener(setupRules);
+
+const refreshAlarm = 'refresh-feeds';
+const refreshIntervalMinutes = 4 * 60;
+
+function scheduleFeedRefresh() {
+  chrome.alarms.create(refreshAlarm, {
+    periodInMinutes: refreshIntervalMinutes,
+  });
+}
+
+chrome.runtime.onInstalled.addListener(scheduleFeedRefresh);
+chrome.runtime.onStartup.addListener(scheduleFeedRefresh);
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === refreshAlarm) {
+    chrome.runtime.sendMessage({ type: refreshAlarm }).catch(() => {});
+  }
+});
