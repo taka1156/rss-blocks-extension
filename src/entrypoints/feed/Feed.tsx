@@ -17,7 +17,6 @@ export default function Feed() {
   const feedState = useFeedActions();
   const groupState = useGroupActions();
   const shortcutState = useShortcutActions();
-  const [thumbs, setThumbs] = useState(true);
   const [sideOpen, setSideOpen] = useState(true);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
@@ -28,12 +27,10 @@ export default function Feed() {
     feedState.feeds,
     groupState.groups,
     shortcutState.shortcuts,
-    setThumbs,
     setSideOpen,
   );
 
   useDashboardHydration(
-    setThumbs,
     setSideOpen,
     groupState.loadGroups,
     shortcutState.loadShortcuts,
@@ -85,22 +82,15 @@ export default function Feed() {
     [feedState.feeds, groupState],
   );
 
-  useEffect(() => {
-    document.body.classList.toggle('no-thumbs', !thumbs);
-  }, [thumbs]);
 
   return (
     <>
       <DashboardHeader
-        thumbs={thumbs}
         sideOpen={sideOpen}
         onOpenAddPanel={() => setAddDialogOpen(true)}
         onOpenSettingsPanel={() => setSettingsDialogOpen(true)}
         onAddGroup={addGroup}
         onRefresh={() => void feedRefresh.refreshAll()}
-        onThumbsChange={(checked) => {
-          void persistence.persistFlags('thumbs', checked);
-        }}
         onSideOpenChange={(checked) => {
           void persistence.persistFlags('sideOpen', checked);
         }}
@@ -125,9 +115,7 @@ export default function Feed() {
           groupState.loadGroups(nextState.groups);
           shortcutState.loadShortcuts(nextState.shortcuts);
           setArticle({ title: '', url: '' });
-          setThumbs(nextState.thumbs);
           setSideOpen(nextState.sideOpen);
-          void persistence.persistFlags('thumbs', nextState.thumbs);
           void persistence.persistFlags('sideOpen', nextState.sideOpen);
         }}
       />

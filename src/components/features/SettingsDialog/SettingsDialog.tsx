@@ -5,9 +5,9 @@ import { BaseInput } from '@/components/shared/BaseInput/BaseInput';
 import {
   type DashboardState,
   loadDashboardState,
-  saveDashboardFlag,
   saveDashboardState,
   saveShortcuts,
+  saveDashboardFlag,
 } from '@/storage/feedDashboard';
 import { importSettings, settingsBody } from './SettingsDialog.css';
 
@@ -24,7 +24,6 @@ function isDashboardState(value: unknown): value is Partial<DashboardState> {
     (candidate.feeds === undefined || Array.isArray(candidate.feeds)) &&
     (candidate.groups === undefined || Array.isArray(candidate.groups)) &&
     (candidate.shortcuts === undefined || Array.isArray(candidate.shortcuts)) &&
-    (candidate.thumbs === undefined || typeof candidate.thumbs === 'boolean') &&
     (candidate.sideOpen === undefined || typeof candidate.sideOpen === 'boolean')
   );
 }
@@ -126,13 +125,11 @@ export function SettingsDialog({ open, onOpenChange, onImport }: SettingsDialogP
                 })
                 .filter((shortcut): shortcut is { url: string } => shortcut !== null)
             : [],
-          thumbs: typeof parsed.thumbs === 'boolean' ? parsed.thumbs : true,
           sideOpen: typeof parsed.sideOpen === 'boolean' ? parsed.sideOpen : true,
         };
 
         await saveDashboardState(nextState.feeds, nextState.groups);
         await saveShortcuts(nextState.shortcuts);
-        await saveDashboardFlag('thumbs', nextState.thumbs);
         await saveDashboardFlag('sideOpen', nextState.sideOpen);
 
         onImport(nextState);

@@ -22,7 +22,6 @@ export type DashboardState = {
   feeds: Feed[];
   groups: Group[];
   shortcuts: Shortcut[];
-  thumbs: boolean;
   sideOpen: boolean;
 };
 
@@ -30,7 +29,6 @@ export const dashboardStorageKeys = {
   feeds: 'sync:feeds',
   groups: 'sync:groups',
   shortcuts: 'sync:shortcuts',
-  thumbs: 'sync:thumbs',
   sideOpen: 'sync:sideOpen',
 } as const;
 
@@ -79,7 +77,6 @@ export async function loadDashboardState(): Promise<DashboardState> {
     dashboardStorageKeys.feeds,
     dashboardStorageKeys.groups,
     dashboardStorageKeys.shortcuts,
-    dashboardStorageKeys.thumbs,
     dashboardStorageKeys.sideOpen,
   ] as const);
 
@@ -106,7 +103,6 @@ export async function loadDashboardState(): Promise<DashboardState> {
     feeds,
     groups,
     shortcuts,
-    thumbs: typeof data.thumbs === 'boolean' ? data.thumbs : true,
     sideOpen: typeof data.sideOpen === 'boolean' ? data.sideOpen : true,
   };
 }
@@ -122,7 +118,7 @@ export async function saveShortcuts(shortcuts: Shortcut[]): Promise<void> {
   await storage.setItem(dashboardStorageKeys.shortcuts, shortcuts);
 }
 
-export async function saveDashboardFlag(key: 'thumbs' | 'sideOpen', value: boolean): Promise<void> {
+export async function saveDashboardFlag(key: 'sideOpen', value: boolean): Promise<void> {
   const storageKey = dashboardStorageKeys[key];
   await storage.setItem(storageKey, value);
 }

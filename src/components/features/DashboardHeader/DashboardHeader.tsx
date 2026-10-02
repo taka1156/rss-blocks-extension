@@ -3,24 +3,20 @@ import { BaseInput } from '@/components/shared/BaseInput/BaseInput';
 import { checkLabel, header, title, tools } from './DashboardHeader.css';
 
 type DashboardHeaderProps = {
-  thumbs: boolean;
   sideOpen: boolean;
   onOpenAddPanel: () => void;
   onOpenSettingsPanel: () => void;
   onAddGroup: () => void;
   onRefresh: () => void;
-  onThumbsChange: (checked: boolean) => void;
   onSideOpenChange: (checked: boolean) => void;
 };
 
 export function DashboardHeader({
-  thumbs,
   sideOpen,
   onOpenAddPanel,
   onOpenSettingsPanel,
   onAddGroup,
   onRefresh,
-  onThumbsChange,
   onSideOpenChange,
 }: DashboardHeaderProps) {
   return (
@@ -50,15 +46,6 @@ export function DashboardHeader({
         >
           ⚙ 設定
         </BaseButton>
-        <label className={checkLabel} htmlFor="thumbToggle">
-          <BaseInput
-            type="checkbox"
-            id="thumbToggle"
-            checked={thumbs}
-            onChange={(event) => onThumbsChange(event.target.checked)}
-          />
-          サムネイル
-        </label>
         <label className={checkLabel} htmlFor="sideToggle">
           <BaseInput
             type="checkbox"

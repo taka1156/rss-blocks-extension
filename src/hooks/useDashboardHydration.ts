@@ -15,7 +15,6 @@ function normalizeFeed(feed: string | Partial<Feed>): Feed {
 }
 
 export function useDashboardHydration(
-  setThumbs: (value: boolean) => void,
   setSideOpen: (value: boolean) => void,
   loadGroups: (
     groups: { id: string; title: string; color: string; collapsed: boolean }[],
@@ -26,12 +25,11 @@ export function useDashboardHydration(
   useEffect(() => {
     void (async () => {
       const state = await loadDashboardState();
-      setThumbs(state.thumbs);
       setSideOpen(state.sideOpen);
       loadGroups(state.groups);
       loadShortcuts(state.shortcuts);
       const nextFeeds = state.feeds.length > 0 ? state.feeds : DEFAULT_FEEDS.map(normalizeFeed);
       setFeeds(nextFeeds);
     })();
-  }, [loadGroups, loadShortcuts, setFeeds, setSideOpen, setThumbs]);
+  }, [loadGroups, loadShortcuts, setFeeds, setSideOpen]);
 }

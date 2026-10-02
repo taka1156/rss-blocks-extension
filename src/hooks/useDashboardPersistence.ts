@@ -3,7 +3,6 @@ import {
   type Feed,
   type Group,
   type Shortcut,
-  saveDashboardFlag,
   saveDashboardState,
   saveShortcuts,
 } from '@/storage/feedDashboard';
@@ -12,7 +11,6 @@ export function useDashboardPersistence(
   feeds: Feed[],
   groups: Group[],
   shortcuts: Shortcut[],
-  setThumbs: (value: boolean) => void,
   setSideOpen: (value: boolean) => void,
 ) {
   const persistDashboard = useCallback(async () => {
@@ -24,12 +22,10 @@ export function useDashboardPersistence(
   }, [shortcuts]);
 
   const persistFlags = useCallback(
-    async (key: 'thumbs' | 'sideOpen', value: boolean) => {
-      if (key === 'thumbs') setThumbs(value);
-      else setSideOpen(value);
-      await saveDashboardFlag(key, value);
+    async (key: 'sideOpen', value: boolean) => {
+      setSideOpen(value);
     },
-    [setSideOpen, setThumbs],
+    [setSideOpen],
   );
 
   return { persistDashboard, persistShortcuts, persistFlags };
