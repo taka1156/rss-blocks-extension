@@ -569,63 +569,128 @@ function createBlock(feed) {
 }
 
 async function loadItems(block, feed, nameEl) {
-  const status = block.querySelector('.status');
+  let status = block.querySelector('.status');
+  const existingList = block.querySelector(':scope > ul');
   try {
     const res = await fetch(feed.url, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const { title, items } = parseFeed(await res.text(), feed.url);
     if (!feed.title) nameEl.textContent = title;
-    const ul = document.createElement('ul');
-    for (const it of items) {
-      const li = document.createElement('li');
-      const articleTarget = { block, item: li };
-      if (it.thumb) {
-        const ta = document.createElement('a');
-        ta.className = 'thumb-link';
-        bindLink(ta, it, articleTarget);
-        const img = new Image();
-        img.className = 'thumb';
-        img.alt = '';
-        img.loading = 'lazy';
-        img.referrerPolicy = 'no-referrer';
-        img.addEventListener('error', () => ta.remove());
-        img.src = it.thumb;
-        ta.append(img);
-        li.append(ta);
+    const previousItems = new Map(
+      [...(existingList?.children ?? [])].map((item) => [item._itemKey, item]),
+    );
+    const updatedItems = items.map((item) => {
+      const key = item.link || `${item.title}\0${item.date}`;
+      const previous = previousItems.get(key);
+      if (previous) {
+        previousItems.delete(key);
+        return previous;
       }
-      const body = document.createElement('div');
-      body.className = 'item-body';
-      const readingLabel = document.createElement('span');
-      readingLabel.className = 'article-reading-label';
-      readingLabel.textContent = '閲覧中';
-      readingLabel.hidden = true;
-      const a = document.createElement('a');
-      a.textContent = it.title;
-      articleTarget.label = readingLabel;
-      bindLink(a, it, articleTarget);
-      const time = document.createElement('time');
-      time.textContent = fmtDate(it.date);
-      body.append(a, readingLabel, time);
-      if (it.audio) {
-        const pb = document.createElement('button');
-        pb.className = 'play';
-        pb.textContent = '▶';
-        pb.title = '再生';
-        pb.setAttribute('aria-label', '再生');
-        pb.addEventListener('click', () =>
-          playAudio(it.audio, it.title, { block, item: li, button: pb }),
-        );
-        body.append(pb);
-      }
-      li.append(body);
-      ul.append(li);
+      return createFeedItem(block, item, key);
+    });
+    const activeItem =
+      (activeArticleTarget?.block === block && activeArticleTarget.item) ||
+      (activeAudioTarget?.block === block && activeAudioTarget.item);
+    if (activeItem && previousItems.has(activeItem._itemKey)) {
+      updatedItems.push(activeItem);
     }
-    status.replaceWith(ul);
+    if (existingList) {
+      existingList.replaceChildren(...updatedItems);
+    } else {
+      const list = document.createElement('ul');
+      list.append(...updatedItems);
+      status.replaceWith(list);
+    }
+    status?.remove();
   } catch (e) {
+    if (!status) {
+      status = document.createElement('div');
+      status.className = 'status';
+      block.insertBefore(status, existingList);
+    }
     status.textContent = `取得失敗: ${e.message}`;
     status.classList.add('error');
   }
 }
+
+function createFeedItem(block, item, key) {
+  const li = document.createElement('li');
+  li._itemKey = key;
+  const articleTarget = { block, item: li };
+  if (item.thumb) {
+    const thumbLink = document.createElement('a');
+    thumbLink.className = 'thumb-link';
+    bindLink(thumbLink, item, articleTarget);
+    const image = new Image();
+    image.className = 'thumb';
+    image.alt = '';
+    image.loading = 'lazy';
+    image.referrerPolicy = 'no-referrer';
+    image.addEventListener('error', () => thumbLink.remove());
+    image.src = item.thumb;
+    thumbLink.append(image);
+    li.append(thumbLink);
+  }
+  const body = document.createElement('div');
+  body.className = 'item-body';
+  const readingLabel = document.createElement('span');
+  readingLabel.className = 'article-reading-label';
+  readingLabel.textContent = '閲覧中';
+  readingLabel.hidden = true;
+  const link = document.createElement('a');
+  link.textContent = item.title;
+  articleTarget.label = readingLabel;
+  bindLink(link, item, articleTarget);
+  const time = document.createElement('time');
+  time.textContent = fmtDate(item.date);
+  body.append(link, readingLabel, time);
+  if (item.audio) {
+    const button = document.createElement('button');
+    button.className = 'play';
+    button.textContent = '▶';
+    button.title = '再生';
+    button.setAttribute('aria-label', '再生');
+    button.addEventListener('click', () =>
+      playAudio(item.audio, item.title, { block, item: li, button }),
+    );
+    body.append(button);
+  }
+  li.append(body);
+  return li;
+}
+
+async function refreshFeeds() {
+  await Promise.all(
+    [...document.querySelectorAll('.block')].map((block) =>
+      loadItems(block, block._feed, block.querySelector('h2 span')),
+    ),
+  );
+}
+
+const refreshButton = $('refreshBtn');
+let nextRefreshAt = 0;
+
+async function syncRefreshSchedule() {
+  const alarm = await chrome.alarms.get('refresh-feeds');
+  nextRefreshAt = alarm?.scheduledTime ?? 0;
+}
+
+function updateRefreshLabel() {
+  if (!nextRefreshAt) {
+    refreshButton.textContent = '更新';
+    return;
+  }
+  const totalSeconds = Math.ceil(
+    Math.max(0, nextRefreshAt - Date.now()) / 1000,
+  );
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  refreshButton.textContent = `更新 (あと ${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')})`;
+}
+
+syncRefreshSchedule().then(updateRefreshLabel);
+setInterval(updateRefreshLabel, 1000);
 
 /* ---------- グループ ---------- */
 function createGroup(group, openEdit = false) {
@@ -881,7 +946,13 @@ feedForm.addEventListener('submit', (event) => {
 shortcutForm.addEventListener('submit', async (event) => {
   if (await addShortcut(event)) addPanel.close();
 });
-document.getElementById('refreshBtn').addEventListener('click', render);
+document.getElementById('refreshBtn').addEventListener('click', refreshFeeds);
+chrome.runtime.onMessage.addListener((message) => {
+  if (message?.type === 'refresh-feeds') {
+    refreshFeeds();
+    syncRefreshSchedule().then(updateRefreshLabel);
+  }
+});
 document.getElementById('addGroupBtn').addEventListener('click', () => {
   const g = {
     id: Date.now().toString(36),

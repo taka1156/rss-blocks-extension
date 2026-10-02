@@ -5,6 +5,7 @@
   "description": "複数のRSS/Atomフィードをブロック形式で一覧表示します",
   "permissions": [
     "storage",
+    "alarms",
     "declarativeNetRequest"
   ],
   "host_permissions": [

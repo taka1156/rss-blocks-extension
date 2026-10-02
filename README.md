@@ -1,48 +1,63 @@
+[日本語版はこちら](README.ja.md)
+
 # RSS Blocks
 
-複数のRSS/Atomフィードをブロック形式でまとめて確認できるChrome拡張機能です。記事を拡張機能内で表示したり、フィード内の音声を再生したりできます。
+A Chrome extension for organizing multiple RSS/Atom feeds into blocks. View articles in the extension or play audio enclosures, such as podcasts.
 
-## インストール
+## Installation
 
-この拡張機能にはビルド工程や外部依存パッケージはありません。
+### Run in a development environment
 
-1. このリポジトリをローカルに配置します。
-2. Chromeで `chrome://extensions` を開きます。
-3. 「デベロッパー モード」を有効にします。
-4. 「パッケージ化されていない拡張機能を読み込む」を選び、このリポジトリのフォルダーを指定します。
-5. ツールバーの「RSS Blocks」アイコンを押して開きます。
+1. Clone this repository locally.
+2. Install the dependencies.
+   ```sh
+   npm install
+   ```
+3. Build for the Chromium target.
+   ```sh
+   npm run build
+   ```
+4. Open `chrome://extensions` in Chrome.
+5. Enable **Developer mode**.
+6. Select **Load unpacked** and choose the generated `.output/chrome-mv3` folder.
+7. Open RSS Blocks by clicking its toolbar icon.
 
-## 使い方
+## Usage
 
-- 「追加」からRSS/Atomフィード、またはWebサイトへのショートカットを登録します。
-- 「グループ」でフィードをまとめ、ドラッグして並べ替えます。
-- フィードの記事を選ぶと、通常は記事ペインに表示します。記事ペインを使わない設定の場合や、新しいタブで開くボタンを選んだ場合は別タブで開きます。
-- フィードに音声エンクロージャーがある記事は、再生ボタンから音声を再生できます。
-- 「更新」でフィードを再取得します。各フィードから表示する記事は最大15件です。
-- サムネイルと記事ペインの使用は、画面上部のチェックボックスで切り替えます。
-- 「設定」からショートカット、グループ、フィードの設定をJSON形式でエクスポート／インポートできます。インポートすると、これら3種類の設定が置き換わります。
+- Select **Add** to register an RSS/Atom feed or a shortcut to a website.
+- Use **Groups** to organize feeds, then drag them to reorder.
+- Select an article in a feed to display it in the article pane by default. It opens in a new tab if the article pane is disabled or if you select the button to open it in a new tab.
+- For articles with audio enclosures, select the play button to play the audio.
+- Select **Refresh** to fetch feeds again. Up to 15 articles are shown for each feed.
+- Use the checkboxes at the top of the page to toggle thumbnails and the article pane.
+- Use **Settings** to export or import shortcuts, groups, and feeds as JSON. Importing replaces all three types of settings.
 
-フィード、グループ、ショートカット、および表示設定は `chrome.storage.sync` に保存されます。Chromeの同期機能の対象です。フィードがまだ保存されていない場合は、Zenn、Qiita、Yahoo!ニュースの初期フィードが表示されます。
+Feeds, groups, shortcuts, and display preferences are stored in `chrome.storage.sync` and are subject to Chrome sync. If no feeds have been saved yet, the default feeds from Zenn, Qiita, and Yahoo! News are displayed.
 
-## 権限とプライバシー
+## Permissions and privacy
 
-- `storage`: 設定をChromeの同期ストレージに保存します。
-- `declarativeNetRequest`: 拡張機能内の記事ペインで表示できるよう、拡張機能自身が読み込むサブフレームに限って `X-Frame-Options` と `Content-Security-Policy` のレスポンスヘッダーを除去します。
-- すべてのホストへのアクセス: 任意のフィードや、フィードに含まれる画像・音声などを取得するために使用します。
+- `storage`: Saves settings to Chrome sync storage.
+- `declarativeNetRequest`: Removes the `X-Frame-Options` and `Content-Security-Policy` response headers only for subframes loaded by the extension itself, so articles can be displayed in the extension's article pane.
+- Access to all hosts: Used to fetch arbitrary feeds and their images, audio, and other content.
 
-フィードやリンク先の内容は外部サイトから取得されます。登録するURLと、埋め込み表示する記事の内容を確認してください。
+Feed content and linked pages are retrieved from external websites. Review the URLs you register and the content of articles displayed in embedded views.
 
-## 開発
+## Development
 
-- `manifest.json`: Chrome拡張機能の設定
-- `background.js`: 拡張機能の起動処理と記事ペイン向けネットワークルール
-- `feeds.html`: メイン画面
-- `feeds.js`: フィード取得・表示、設定、記事／音声ペインの処理
-- `feeds.css`: 画面スタイル
+### Tech stack
 
-リポジトリにはビルド／テスト用スクリプトはありません。JavaScriptの構文確認にはNode.jsを使えます。
+- **WXT**: Chrome extension framework
+- **React**: UI library
+- **TypeScript**: JavaScript with static typing
+- **Vanilla Extract**: CSS-in-JS library
+- **Vitest**: Unit testing framework
+- **Biome**: Code formatter and linter
 
-```sh
-node --check feeds.js
-node --check background.js
-```
+### Project structure
+
+- `src/entrypoints/`: Extension entrypoints (background, content script, and UI)
+- `src/components/`: React components
+- `src/hooks/`: Custom hooks
+- `src/utils/`: Utility functions
+- `src/storage/`: Local storage operations
+- `src/styles/`: Global styles
