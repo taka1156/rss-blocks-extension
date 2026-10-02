@@ -47,7 +47,7 @@ export function FeedBoard({
           group,
           feeds: feeds.filter((feed) => feed.group === group.id),
         }))
-        .filter((entry) => entry.feeds.length > 0 || !entry.group.collapsed),
+        .filter((entry) => entry.feeds.length > 0),
     }),
     [feeds, groups],
   );
@@ -105,10 +105,10 @@ export function FeedBoard({
       </ul>
 
       <ul id="groups" className={groupsClass} aria-label="グループ一覧">
-        {groups.map((group) => (
+        {groupedFeeds.grouped.map((entry) => (
           <GroupCard
-            key={group.id}
-            group={group}
+            key={entry.group.id}
+            group={entry.group}
             feeds={feeds}
             onToggleCollapse={(groupId) => {
               void onToggleGroupCollapse(groupId);

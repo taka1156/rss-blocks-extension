@@ -1,14 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { AddFeedDialog } from './AddFeedDialog';
 
 describe('AddFeedDialog', () => {
-  beforeEach(() => {
-    HTMLDialogElement.prototype.showModal = vi.fn();
-    HTMLDialogElement.prototype.close = vi.fn();
-  });
-
   const defaultProps = {
     open: false,
     onOpenChange: vi.fn(),
@@ -62,7 +57,7 @@ describe('AddFeedDialog', () => {
     await userEvent.setup().click(shortcutTab);
 
     const shortcutPanel = screen.getByRole('tabpanel', { name: /ショートカット追加/i });
-    const input = shortcutPanel.querySelector('input[name="urlInput"]') as HTMLInputElement;
+    const input = shortcutPanel.querySelector('input[name="shortcutUrl"]') as HTMLInputElement;
     const submitButton = shortcutPanel.querySelector('button[type="submit"]') as HTMLButtonElement;
 
     await userEvent.setup().type(input, 'https://example.com');

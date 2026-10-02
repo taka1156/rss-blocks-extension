@@ -20,9 +20,6 @@ vi.mock('@/storage/feedDashboard', () => ({
 
 describe('SettingsDialog', () => {
   beforeEach(() => {
-    HTMLDialogElement.prototype.showModal = vi.fn();
-    HTMLDialogElement.prototype.close = vi.fn();
-
     // Mock URL.createObjectURL
     vi.stubGlobal('URL', {
       createObjectURL: vi.fn(() => 'blob:mock-url'),
@@ -47,21 +44,19 @@ describe('SettingsDialog', () => {
 
   it('renders close button', () => {
     render(<SettingsDialog {...defaultProps} open={true} />);
-    const closeButton = screen.getByRole('button', { name: /閉じる/i });
-    expect(closeButton).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '閉じる' })).toBeInTheDocument();
   });
 
   it('calls onOpenChange when close button is clicked', async () => {
     const handleOpenChange = vi.fn();
     render(<SettingsDialog {...defaultProps} open={true} onOpenChange={handleOpenChange} />);
-    const closeButton = screen.getByRole('button', { name: /閉じる/i });
-    await userEvent.setup().click(closeButton);
+    await userEvent.setup().click(screen.getByRole('button', { name: '閉じる' }));
     expect(handleOpenChange).toHaveBeenCalledWith(false);
   });
 
   it('renders export button', () => {
     render(<SettingsDialog {...defaultProps} open={true} />);
-    const exportButton = screen.getByRole('button', { name: /エクスポート|export/i });
+    const exportButton = screen.getByRole('button', { name: /設定をエクスポート/ });
     expect(exportButton).toBeInTheDocument();
   });
 
@@ -177,12 +172,11 @@ describe('SettingsDialog', () => {
     await userEvent.setup().upload(importInput, file);
 
     await waitFor(() => {
-      expect(handleImport).toHaveBeenCalled();
-      const calls = handleImport.mock.calls;
-      if (calls.length > 0 && calls[0]) {
-        const importedData = calls[0][0];
-        expect(importedData?.feeds?.length).toBe(1);
-      }
+      expect(handleImport).toHaveBeenCalledWith(
+        expect.objectContaining({
+          feeds: [expect.objectContaining({ url: 'https://valid.com/feed' })],
+        }),
+      );
     });
   });
 });

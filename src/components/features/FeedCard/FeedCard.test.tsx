@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import type { Feed, FeedItem } from '@/storage/feedDashboard';
+import type { Feed } from '@/storage/feedDashboard';
+import type { FeedItem } from '@/utils/feedDashboard';
 import { FeedCard } from './FeedCard';
 
 describe('FeedCard', () => {
@@ -15,13 +16,17 @@ describe('FeedCard', () => {
   const mockFeedItems: FeedItem[] = [
     {
       title: 'Article 1',
-      url: 'https://example.com/article1',
-      date: new Date('2024-01-01'),
+      link: 'https://example.com/article1',
+      date: new Date('2024-01-01').toLocaleDateString(),
+      thumb: '',
+      audio: '',
     },
     {
       title: 'Article 2',
-      url: 'https://example.com/article2',
-      date: new Date('2024-01-02'),
+      link: 'https://example.com/article2',
+      date: new Date('2024-01-02').toLocaleDateString(),
+      thumb: '',
+      audio: '',
     },
   ];
 
@@ -69,10 +74,8 @@ describe('FeedCard', () => {
     const handleOpenArticle = vi.fn(() => true);
     render(<FeedCard {...defaultProps} items={mockFeedItems} onOpenArticle={handleOpenArticle} />);
     // Article items are rendered as clickable elements within list items
-    const articleElements = screen.getAllByText(/Article/i);
-    if (articleElements.length > 0) {
-      await userEvent.setup().click(articleElements[0]);
-    }
+    await userEvent.setup().click(screen.getByRole('link', { name: 'Article 1' }));
+    expect(handleOpenArticle).toHaveBeenCalledWith('Article 1', 'https://example.com/article1');
   });
 
   it('renders remove button', () => {
@@ -85,8 +88,8 @@ describe('FeedCard', () => {
     const { container } = render(
       <FeedCard {...defaultProps} feed={{ ...mockFeed, color: '#ff0000' }} />,
     );
-    const card = container.querySelector('[style*="ff0000"]');
-    expect(card).toBeInTheDocument();
+    const card = container.querySelector('li[class*="block"]');
+    expect(card).toHaveStyle('border-color: #ff0000');
   });
 
   it('renders with default color when feed color is empty', () => {
@@ -102,12 +105,17 @@ describe('FeedCard', () => {
     expect(buttons.length).toBeGreaterThan(0);
   });
 
-  it('supports drag operations', () => {
-    const { container } = render(<FeedCard {...defaultProps} />);
-    const dragElement = container.querySelector('[draggable=true]');
-    if (dragElement) {
-      expect(dragElement).toBeInTheDocument();
-    }
+  it('becomes draggable after pressing the drag handle and calls onDragStart', () => {
+    const onDragStart = vi.fn();
+    const { container } = render(<FeedCard {...defaultProps} onDragStart={onDragStart} />);
+    const card = container.querySelector('li') as HTMLLIElement;
+    expect(card).toHaveAttribute('draggable', 'false');
+
+    fireEvent.mouseDown(screen.getByTitle('ドラッグして移動'));
+    expect(card).toHaveAttribute('draggable', 'true');
+
+    fireEvent.dragStart(card);
+    expect(onDragStart).toHaveBeenCalledWith(expect.anything(), mockFeed);
   });
 
   it('handles drop operations', () => {
@@ -129,8 +137,10 @@ describe('FeedCard', () => {
     const itemsWithDates: FeedItem[] = [
       {
         title: 'Recent Article',
-        url: 'https://example.com/recent',
-        date: new Date(),
+        link: 'https://example.com/recent',
+        date: new Date().toLocaleDateString(),
+        thumb: '',
+        audio: '',
       },
     ];
     render(<FeedCard {...defaultProps} items={itemsWithDates} />);

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { ShortcutSection } from './ShortcutSection';
@@ -62,18 +62,15 @@ describe('ShortcutSection', () => {
     expect(handleRemoveShortcut).toHaveBeenCalledWith('https://example.com');
   });
 
-  it('renders fallback icon with first character when icon fails', async () => {
+  it('renders fallback icon with first character when icon fails', () => {
     const shortcuts = [{ url: 'https://example.com' }];
     const { container } = render(
       <ShortcutSection shortcuts={shortcuts} onRemoveShortcut={vi.fn()} />,
     );
-    const image = container.querySelector('img');
+    const image = container.querySelector('img') as HTMLImageElement;
     expect(image).toBeInTheDocument();
 
-    // Simulate image load failure
-    if (image) {
-      image.dispatchEvent(new Event('error'));
-    }
+    fireEvent.error(image);
 
     // Look for fallback text
     expect(screen.getByText('E')).toBeInTheDocument();

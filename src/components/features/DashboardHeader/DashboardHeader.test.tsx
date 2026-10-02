@@ -28,14 +28,9 @@ describe('DashboardHeader', () => {
 
   it('calls onOpenAddPanel when add button is clicked', async () => {
     const handleOpenAddPanel = vi.fn();
-    const { container } = render(
-      <DashboardHeader {...defaultProps} onOpenAddPanel={handleOpenAddPanel} />,
-    );
-    const addButton = container.querySelector('button#addPanelToggle');
-    if (addButton) {
-      await userEvent.setup().click(addButton as HTMLElement);
-      expect(handleOpenAddPanel).toHaveBeenCalledOnce();
-    }
+    render(<DashboardHeader {...defaultProps} onOpenAddPanel={handleOpenAddPanel} />);
+    await userEvent.setup().click(screen.getByRole('button', { name: /追加/i }));
+    expect(handleOpenAddPanel).toHaveBeenCalledOnce();
   });
 
   it('calls onAddGroup when group button is clicked', async () => {
@@ -88,9 +83,10 @@ describe('DashboardHeader', () => {
 
   it('has correct button attributes', () => {
     render(<DashboardHeader {...defaultProps} />);
-    const addButton = screen.getByRole('button', { name: /\+ 追加/i });
+    const buttons = screen.getAllByRole('button');
+    const addButton = buttons.find((button) => button.textContent?.includes('追加'));
     expect(addButton).toHaveAttribute('aria-controls', 'addPanel');
-    const settingsButton = screen.getByRole('button', { name: /設定/i });
+    const settingsButton = buttons.find((button) => button.textContent?.includes('設定'));
     expect(settingsButton).toHaveAttribute('aria-haspopup', 'dialog');
   });
 });

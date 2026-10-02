@@ -89,19 +89,15 @@ describe('ArticlePane', () => {
   it('calls onCloseArticle when article close button is clicked', async () => {
     const handleCloseArticle = vi.fn();
     render(<ArticlePane {...defaultProps} audioUrl="" onCloseArticle={handleCloseArticle} />);
-    const closeButtons = screen.getAllByRole('button', { name: /close|閉じる/i });
-    if (closeButtons.length > 0) {
-      await userEvent.setup().click(closeButtons[0]);
-    }
+    await userEvent.setup().click(screen.getByTitle('閉じる'));
+    expect(handleCloseArticle).toHaveBeenCalledOnce();
   });
 
   it('calls onCloseAudio when audio close button is clicked', async () => {
     const handleCloseAudio = vi.fn();
     render(<ArticlePane {...defaultProps} onCloseAudio={handleCloseAudio} />);
-    const closeButtons = screen.getAllByRole('button');
-    if (closeButtons.length > 1) {
-      await userEvent.setup().click(closeButtons[1]);
-    }
+    await userEvent.setup().click(screen.getByTitle('再生を閉じる'));
+    expect(handleCloseAudio).toHaveBeenCalledOnce();
   });
 
   it('renders resize handle', () => {

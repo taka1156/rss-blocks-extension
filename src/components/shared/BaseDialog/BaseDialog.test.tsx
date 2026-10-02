@@ -1,15 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { BaseDialog } from './BaseDialog';
 
 describe('BaseDialog', () => {
-  beforeEach(() => {
-    // Mock HTMLDialogElement methods if needed
-    HTMLDialogElement.prototype.showModal = vi.fn();
-    HTMLDialogElement.prototype.close = vi.fn();
-  });
-
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -45,7 +39,7 @@ describe('BaseDialog', () => {
   });
 
   it('renders close button', () => {
-    render(
+    const { container } = render(
       <BaseDialog
         id="test-dialog"
         title="Dialog"
@@ -56,7 +50,7 @@ describe('BaseDialog', () => {
         Content
       </BaseDialog>,
     );
-    const closeButton = screen.getByRole('button', { name: /×/i });
+    const closeButton = container.querySelector('#test-close');
     expect(closeButton).toBeInTheDocument();
   });
 
@@ -74,7 +68,7 @@ describe('BaseDialog', () => {
         Content
       </BaseDialog>,
     );
-    const closeButton = screen.getByRole('button', { name: /×/i });
+    const closeButton = screen.getByRole('button');
     await userEvent.setup().click(closeButton);
     expect(handleOpenChange).toHaveBeenCalledWith(false);
   });
@@ -95,7 +89,7 @@ describe('BaseDialog', () => {
         Content
       </BaseDialog>,
     );
-    const closeButton = screen.getByRole('button', { name: /×/i });
+    const closeButton = screen.getByRole('button');
     await userEvent.setup().click(closeButton);
     expect(handleClose).toHaveBeenCalledOnce();
   });
