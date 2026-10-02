@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { EditForm, type EditValues } from './EditForm';
@@ -78,10 +78,9 @@ describe('EditForm', () => {
 
   it('submits current color value', async () => {
     const handleSubmit = vi.fn();
-    render(<EditForm {...defaultProps} onSubmit={handleSubmit} />);
-    const colorInput = screen.getByDisplayValue('#2563eb') as HTMLInputElement;
-    await userEvent.setup().clear(colorInput);
-    await userEvent.setup().type(colorInput, '#00ff00');
+    const { container } = render(<EditForm {...defaultProps} onSubmit={handleSubmit} />);
+    const colorInput = container.querySelector('input[type="color"]') as HTMLInputElement;
+    fireEvent.change(colorInput, { target: { value: '#00ff00' } });
 
     const submitButton = screen.getByRole('button', { name: /保存/i });
     await userEvent.setup().click(submitButton);
@@ -95,10 +94,11 @@ describe('EditForm', () => {
 
   it('calls onColorPreview when color changes', async () => {
     const handleColorPreview = vi.fn();
-    render(<EditForm {...defaultProps} onColorPreview={handleColorPreview} />);
-    const colorInput = screen.getByDisplayValue('#2563eb') as HTMLInputElement;
-    await userEvent.setup().clear(colorInput);
-    await userEvent.setup().type(colorInput, '#00ff00');
+    const { container } = render(
+      <EditForm {...defaultProps} onColorPreview={handleColorPreview} />,
+    );
+    const colorInput = container.querySelector('input[type="color"]') as HTMLInputElement;
+    fireEvent.change(colorInput, { target: { value: '#00ff00' } });
     expect(handleColorPreview).toHaveBeenCalledWith('#00ff00');
   });
 

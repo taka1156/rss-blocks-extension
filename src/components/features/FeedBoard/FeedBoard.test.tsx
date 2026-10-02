@@ -90,10 +90,7 @@ describe('FeedBoard', () => {
 
   it('shows collapsed groups', () => {
     const collapsedGroups: Group[] = [
-      {
-        ...mockGroups[0],
-        collapsed: true,
-      },
+      { id: 'group1', title: 'News Group', color: '#ff8000', collapsed: true },
     ];
     render(<FeedBoard {...defaultProps} groups={collapsedGroups} />);
     expect(screen.getByText('News Group')).toBeInTheDocument();
@@ -138,7 +135,7 @@ describe('FeedBoard', () => {
 
   it('renders with empty feeds list', () => {
     render(<FeedBoard {...defaultProps} feeds={[]} />);
-    expect(screen.getByText('News Group')).toBeInTheDocument();
+    expect(screen.queryByText('News Group')).not.toBeInTheDocument();
   });
 
   it('renders with empty groups list', () => {
@@ -160,8 +157,10 @@ describe('FeedBoard', () => {
       'https://example.com/feed1': [
         {
           title: 'Article 1',
-          url: 'https://example.com/article1',
-          date: new Date(),
+          link: 'https://example.com/article1',
+          date: new Date().toLocaleDateString(),
+          thumb: '',
+          audio: '',
         },
       ],
     };

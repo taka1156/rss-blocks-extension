@@ -1,8 +1,10 @@
+import { useState } from 'react';
+import { FeedItemRow } from '@/components/features/FeedItemRow/FeedItemRow';
 import { useCardDragState } from '@/hooks/useCardDragState';
 import { useColorPreview } from '@/hooks/useColorPreview';
 import { useEditState } from '@/hooks/useEditState';
 import type { Feed } from '@/storage/feedDashboard';
-import { type FeedItem, formatFeedDate } from '@/utils/feedDashboard';
+import type { FeedItem } from '@/utils/feedDashboard';
 import { EditForm, type EditValues } from '../EditForm/EditForm';
 import {
   actions,
@@ -12,12 +14,7 @@ import {
   errorStatus,
   handle,
   icon,
-  itemBody,
-  itemDate,
-  itemLink,
   itemList,
-  itemRow,
-  itemThumb,
   removeIcon,
   status,
   subtitle,
@@ -53,10 +50,20 @@ export function FeedCard({
   const { editing, setEditing } = useEditState();
   const { dragReady, setDragReady, isDragging, setIsDragging } = useCardDragState();
   const { finalColor: borderColor, setPreviewColor, resetPreview } = useColorPreview(feed.color);
+  const [openArticleUrl, setOpenArticleUrl] = useState<string>('');
+  const [playingAudioUrl, setPlayingAudioUrl] = useState<string>('');
 
   const closeEdit = () => {
     setEditing(false);
     resetPreview();
+  };
+  const handleOpenArticle = (title: string, url: string) => {
+    setOpenArticleUrl(url);
+    return onOpenArticle(title, url);
+  };
+  const handlePlayAudio = (title: string, url: string) => {
+    setPlayingAudioUrl(playingAudioUrl === url ? '' : url);
+    onPlayAudio(title, url);
   };
   const statusText = feedStatus?.loading ? '読み込み中…' : (feedStatus?.error ?? '');
 
@@ -136,38 +143,14 @@ export function FeedCard({
       {items.length > 0 && (
         <ul className={itemList}>
           {items.map((item) => (
-            <li className={itemRow} key={item.link || `${item.title}-${item.date}`}>
-              {item.thumb && <img className={itemThumb} src={item.thumb} alt="" loading="lazy" />}
-              <div className={itemBody}>
-                <a
-                  className={itemLink}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(event) => {
-                    if (!item.link) return;
-                    if (onOpenArticle(item.title, item.link)) event.preventDefault();
-                  }}
-                >
-                  {item.title || item.link || '(無題)'}
-                </a>
-                {formatFeedDate(item.date) && (
-                  <time className={itemDate} dateTime={item.date}>
-                    {formatFeedDate(item.date)}
-                  </time>
-                )}
-                {item.audio && (
-                  <button
-                    type="button"
-                    className={icon}
-                    title="再生"
-                    onClick={() => onPlayAudio(item.title, item.audio)}
-                  >
-                    ▶
-                  </button>
-                )}
-              </div>
-            </li>
+            <FeedItemRow
+              key={item.link || `${item.title}-${item.date}`}
+              item={item}
+              isArticleOpen={openArticleUrl === item.link}
+              isAudioPlaying={playingAudioUrl === item.audio}
+              onOpenArticle={handleOpenArticle}
+              onPlayAudio={handlePlayAudio}
+            />
           ))}
         </ul>
       )}

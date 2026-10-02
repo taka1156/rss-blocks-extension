@@ -64,11 +64,8 @@ describe('GroupCard', () => {
 
   it('applies group color as style', () => {
     const { container } = render(<GroupCard {...defaultProps} />);
-    const groupElement = container.querySelector('li');
-    if (groupElement && groupElement.style) {
-      // Check if the style contains color information
-      expect(groupElement.getAttribute('style')).toBeTruthy();
-    }
+    const groupElement = container.querySelector('li') as HTMLLIElement;
+    expect(groupElement.getAttribute('style')).toContain('#ff0000');
   });
 
   it('shows collapsed state when group is collapsed', () => {
@@ -82,11 +79,8 @@ describe('GroupCard', () => {
   it('calls onToggleCollapse when toggle button is clicked', async () => {
     const handleToggleCollapse = vi.fn();
     render(<GroupCard {...defaultProps} onToggleCollapse={handleToggleCollapse} />);
-    const buttons = screen.getAllByRole('button');
-    // Find toggle button (first button in group header)
-    if (buttons.length > 0) {
-      await userEvent.setup().click(buttons[0]);
-    }
+    await userEvent.setup().click(screen.getByTitle('開閉'));
+    expect(handleToggleCollapse).toHaveBeenCalledWith('group1');
   });
 
   it('supports drag operations for group', () => {
@@ -123,8 +117,10 @@ describe('GroupCard', () => {
       'https://example.com/feed1': [
         {
           title: 'Article 1',
-          url: 'https://example.com/article1',
-          date: new Date(),
+          link: 'https://example.com/article1',
+          date: new Date().toLocaleDateString(),
+          thumb: '',
+          audio: '',
         },
       ],
     };
@@ -136,10 +132,8 @@ describe('GroupCard', () => {
     const { container } = render(
       <GroupCard {...defaultProps} group={{ ...mockGroup, color: '#00ff00' }} />,
     );
-    const groupElement = container.querySelector('li');
-    if (groupElement && groupElement.style) {
-      expect(groupElement.getAttribute('style')).toBeTruthy();
-    }
+    const groupElement = container.querySelector('li') as HTMLLIElement;
+    expect(groupElement.getAttribute('style')).toContain('#00ff00');
   });
 
   it('displays group with no color', () => {
