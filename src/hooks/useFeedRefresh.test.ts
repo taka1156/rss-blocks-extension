@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { parseFeed } = vi.hoisted(() => ({ parseFeed: vi.fn() }));
-vi.mock('@/utils/feedDashboard', () => ({ parseFeed }));
+vi.mock('@/utils/feedParser', () => ({ parseFeed }));
 
 import { useFeedRefresh } from './useFeedRefresh';
 

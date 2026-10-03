@@ -1,4 +1,4 @@
-import { type FeedItem, formatFeedDate } from '@/utils/feedDashboard';
+import { type FeedItem, formatFeedDate } from '@/utils/feedParser';
 import { icon } from '../FeedCard/FeedCard.css';
 import { itemBody, itemDate, itemLink, itemRow, itemStatus, itemThumb } from './FeedItemRow.css';
 

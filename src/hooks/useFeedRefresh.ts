@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Feed } from '@/storage/feedDashboard';
-import { parseFeed } from '@/utils/feedDashboard';
+import { parseFeed } from '@/utils/feedParser';
 
 function retryAfter(response: Response): string {
   const value = response.headers.get('Retry-After');

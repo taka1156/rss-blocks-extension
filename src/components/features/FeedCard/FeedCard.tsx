@@ -4,7 +4,7 @@ import { useCardDragState } from '@/hooks/useCardDragState';
 import { useColorPreview } from '@/hooks/useColorPreview';
 import { useEditState } from '@/hooks/useEditState';
 import type { Feed } from '@/storage/feedDashboard';
-import type { FeedItem } from '@/utils/feedDashboard';
+import type { FeedItem } from '@/utils/feedParser';
 import { EditForm, type EditValues } from '../EditForm/EditForm';
 import {
   actions,

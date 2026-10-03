@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { Feed } from '@/storage/feedDashboard';
-import type { FeedItem } from '@/utils/feedDashboard';
+import type { FeedItem } from '@/utils/feedParser';
 import { FeedCard } from './FeedCard';
 
 describe('FeedCard', () => {
