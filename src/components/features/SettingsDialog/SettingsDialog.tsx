@@ -14,7 +14,7 @@ import { importSettings, settingsBody } from './SettingsDialog.css';
 type SettingsDialogProps = {
   open: boolean;
   onOpenChange: (nextOpen: boolean) => void;
-  onImport: (nextState: DashboardState) => void;
+  onImport: (nextState: DashboardState) => void | Promise<void>;
 };
 
 function isDashboardState(value: unknown): value is Partial<DashboardState> {
@@ -132,7 +132,7 @@ export function SettingsDialog({ open, onOpenChange, onImport }: SettingsDialogP
         await saveShortcuts(nextState.shortcuts);
         await saveDashboardFlag('sideOpen', nextState.sideOpen);
 
-        onImport(nextState);
+        await onImport(nextState);
         event.target.value = '';
         onOpenChange(false);
       } catch {

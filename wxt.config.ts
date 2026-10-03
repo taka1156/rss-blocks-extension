@@ -5,7 +5,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   manifest: {
     permissions: ['storage', 'alarms', 'declarativeNetRequest'],
-    host_permissions: ['<all_urls>'],
+    optional_host_permissions: ['http://*/*', 'https://*/*'],
     action: {
       default_title: 'RSS Decks を開く',
     },
