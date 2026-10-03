@@ -1,4 +1,6 @@
+import babel from '@rolldown/plugin-babel';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import { reactCompilerPreset } from '@vitejs/plugin-react';
 import { defineConfig } from 'wxt';
 
 // See https://wxt.dev/api/config.html
@@ -37,7 +39,12 @@ export default defineConfig({
         port: 3000,
       },
     },
-    plugins: [vanillaExtractPlugin()],
+    plugins: [
+      vanillaExtractPlugin(),
+      babel({
+        presets: [reactCompilerPreset()],
+      }),
+    ],
   }),
   modules: ['@wxt-dev/module-react', '@wxt-dev/auto-icons'],
 });
