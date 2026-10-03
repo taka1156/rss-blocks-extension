@@ -15,7 +15,7 @@ describe('DashboardHeader', () => {
 
   it('renders header with title', () => {
     render(<DashboardHeader {...defaultProps} />);
-    expect(screen.getByText('RSS Blocks')).toBeInTheDocument();
+    expect(screen.getByText('RSS Decks')).toBeInTheDocument();
   });
 
   it('renders all action buttons', () => {

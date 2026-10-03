@@ -1,6 +1,6 @@
 {
-  "name": "wxt-react-starter",
-  "description": "manifest.json description",
+  "name": "rss-decks-extension",
+  "description": "複数のRSS/Atomフィードをブロック形式で一覧表示します",
   "private": true,
   "version": "0.0.0",
   "type": "module",

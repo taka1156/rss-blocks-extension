@@ -7,9 +7,9 @@ export default defineConfig({
     permissions: ['storage', 'alarms', 'declarativeNetRequest'],
     host_permissions: ['<all_urls>'],
     action: {
-      default_title: 'RSS Blocks を開く',
+      default_title: 'RSS Decks を開く',
     },
-    name: 'RSS Blocks',
+    name: 'RSS Decks',
     version: '1.0.0',
     description: '複数のRSS/Atomフィードをブロック形式で一覧表示します',
   },

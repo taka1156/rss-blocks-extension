@@ -21,7 +21,7 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <header className={header}>
-      <h1 className={title}>RSS Blocks</h1>
+      <h1 className={title}>RSS Decks</h1>
       <div className={tools}>
         <BaseButton
           id="addPanelToggle"
