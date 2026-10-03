@@ -30,6 +30,7 @@ A Chrome extension for organizing multiple RSS/Atom feeds into blocks. View arti
 - For articles with audio enclosures, select the play button to play the audio.
 - Select **Refresh** to fetch feeds again. Up to 15 articles are shown for each feed.
 - Use the checkboxes at the top of the page to toggle thumbnails and the article pane.
+- Use the language menu at the top of the page to switch between Japanese and English. The choice is saved in the browser and defaults to the browser language.
 - Use **Settings** to export or import shortcuts, groups, and feeds as JSON. Importing replaces all three types of settings.
 
 Feeds, groups, shortcuts, and display preferences are stored in `chrome.storage.sync` and are subject to Chrome sync. If no feeds have been saved yet, the default feeds from Zenn, Qiita, and Yahoo! News are displayed.
@@ -51,6 +52,7 @@ Feed content and linked pages are retrieved from external websites. Review the U
 - **TypeScript**: JavaScript with static typing
 - **Vanilla Extract**: CSS-in-JS library
 - **Vitest**: Unit testing framework
+- **i18next**: Internationalization (Japanese / English)
 - **Biome**: Code formatter and linter
 
 ### Project structure
@@ -61,3 +63,4 @@ Feed content and linked pages are retrieved from external websites. Review the U
 - `src/utils/`: Utility functions
 - `src/storage/`: Local storage operations
 - `src/styles/`: Global styles
+- `src/locales/`: Translation files (`ja`, `en`)
