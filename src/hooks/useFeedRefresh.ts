@@ -48,10 +48,9 @@ export function useFeedRefresh(
   const feedsRef = useRef(feeds);
   const updateFeedRef = useRef(updateFeed);
   const activeUrls = useRef(new Set<string>());
-  const autoRefreshKey = useRef('');
+  const knownUrls = useRef(new Set<string>());
   feedsRef.current = feeds;
   updateFeedRef.current = updateFeed;
-  const feedUrlKey = JSON.stringify(feeds.map((feed) => feed.url));
 
   const [itemsByUrl, setItemsByUrl] = useState<
     Record<string, ReturnType<typeof parseFeed>['items']>
@@ -100,11 +99,17 @@ export function useFeedRefresh(
     }
   }, [refreshFeed]);
 
+  // 追加されたフィードだけを取得する（既存フィードは再取得しない）
   useEffect(() => {
-    if (autoRefreshKey.current === feedUrlKey) return;
-    autoRefreshKey.current = feedUrlKey;
-    void refreshAll();
-  }, [feedUrlKey, refreshAll]);
+    const added = feeds.filter((feed) => !knownUrls.current.has(feed.url));
+    knownUrls.current = new Set(feeds.map((feed) => feed.url));
+    void (async () => {
+      for (const feed of added) {
+        await refreshFeed(feed);
+        await sleep(REQUEST_GAP_MS);
+      }
+    })();
+  }, [feeds, refreshFeed]);
 
   return {
     refreshAll,
