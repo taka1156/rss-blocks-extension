@@ -1,6 +1,16 @@
+import iconUrl from '@/assets/icon.png';
 import { BaseButton } from '@/components/shared/BaseButton/BaseButton';
+import { baseButton, buttonSub } from '@/components/shared/BaseButton/BaseButton.css';
 import { BaseInput } from '@/components/shared/BaseInput/BaseInput';
-import { checkLabel, header, title, tools } from './DashboardHeader.css';
+import {
+  brand,
+  brandIcon,
+  checkLabel,
+  header,
+  helpLink,
+  title,
+  tools,
+} from './DashboardHeader.css';
 
 type DashboardHeaderProps = {
   sideOpen: boolean;
@@ -21,7 +31,10 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <header className={header}>
-      <h1 className={title}>RSS Decks</h1>
+      <div className={brand}>
+        <img className={brandIcon} src={iconUrl} alt="RSS Decks Logo" />
+        <h1 className={title}>RSS Decks</h1>
+      </div>
       <div className={tools}>
         <BaseButton
           id="addPanelToggle"
@@ -46,6 +59,15 @@ export function DashboardHeader({
         >
           ⚙ 設定
         </BaseButton>
+        <a
+          id="helpLink"
+          className={`${baseButton} ${buttonSub} ${helpLink}`}
+          href="/help.html"
+          target="_blank"
+          rel="noreferrer"
+        >
+          ? ヘルプ
+        </a>
         <label className={checkLabel} htmlFor="sideToggle">
           <BaseInput
             type="checkbox"

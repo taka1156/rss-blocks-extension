@@ -72,6 +72,9 @@ export default function Help() {
             <a href="#features" className={`${styles.button} ${styles.buttonSecondary}`}>
               機能一覧
             </a>
+            <a href="/feed.html" className={`${styles.button} ${styles.buttonSecondary}`}>
+              ダッシュボードへ
+            </a>
           </div>
           <ul className={styles.metrics} aria-label="RSS Decks の特徴">
             <li className={styles.metricsItem}>
@@ -138,6 +141,11 @@ export default function Help() {
               </div>
             ))}
           </div>
+        </div>
+        <div className={styles.heroActions}>
+          <a href="/feed.html" className={`${styles.button} ${styles.buttonPrimary}`}>
+            ダッシュボードへ
+          </a>
         </div>
       </section>
     </main>

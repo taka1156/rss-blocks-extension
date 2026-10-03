@@ -25,9 +25,9 @@ export default defineBackground(() => {
     });
   };
 
-  const openDashboard = async () => {
+  const openInitialPage = async () => {
     await setupRules();
-    const url = browser.runtime.getURL('/index.html');
+    const url = browser.runtime.getURL('/feed.html');
     const [tab] = await browser.tabs.query({ url });
     if (tab?.id !== undefined) {
       await browser.tabs.update(tab.id, { active: true });
@@ -46,7 +46,7 @@ export default defineBackground(() => {
   };
 
   browser.action.onClicked.addListener(() => {
-    void openDashboard();
+    void openInitialPage();
   });
 
   browser.runtime.onInstalled.addListener(() => {

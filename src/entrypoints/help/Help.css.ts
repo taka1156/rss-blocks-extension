@@ -24,6 +24,9 @@ export const heroInner = style({
   boxShadow: 'var(--shadow)',
   padding: 'clamp(28px, 4vw, 56px)',
   '@media': {
+    '(prefers-color-scheme: dark)': {
+      background: 'linear-gradient(135deg, rgba(34, 37, 44, 0.92), rgba(26, 35, 50, 0.85))',
+    },
     '(max-width: 640px)': {
       padding: '24px 20px',
     },
@@ -96,7 +99,7 @@ export const buttonPrimary = style({
 });
 
 export const buttonSecondary = style({
-  background: 'rgba(255, 255, 255, 0.6)',
+  background: 'var(--panel)',
   border: '1px solid rgba(90, 110, 167, 0.18)',
   color: 'var(--text)',
 });
@@ -121,7 +124,7 @@ export const metrics = style({
 export const metricsItem = style({
   padding: '18px 20px',
   borderRadius: '18px',
-  background: 'rgba(255, 255, 255, 0.64)',
+  background: 'var(--panel)',
   border: '1px solid var(--panel-border)',
 });
 
@@ -214,7 +217,7 @@ export const steps = style({
 });
 
 export const step = style({
-  background: 'rgba(255, 255, 255, 0.72)',
+  background: 'var(--panel)',
   border: '1px solid var(--panel-border)',
   borderRadius: '22px',
   padding: '24px 22px',
@@ -277,7 +280,7 @@ export const actionItem = style({
   minHeight: '100px',
   padding: '18px 20px',
   borderRadius: '18px',
-  background: 'rgba(255, 255, 255, 0.7)',
+  background: 'var(--panel)',
   border: '1px solid rgba(79, 124, 255, 0.12)',
 });
 
