@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BaseButton } from '@/components/shared/BaseButton/BaseButton';
 import { buttons, colorInput, colorRow, form, label } from './EditForm.css';
 
@@ -25,6 +26,7 @@ export function EditForm({
   onSubmit,
   onCancel,
 }: EditFormProps) {
+  const { t } = useTranslation();
   const [title, setTitle] = useState(initial.title);
   const [url, setUrl] = useState(initial.url);
   const [color, setColor] = useState(initial.color);
@@ -59,7 +61,7 @@ export function EditForm({
         </label>
       )}
       <label className={label}>
-        枠線の色
+        {t('edit.borderColor')}
         <span className={colorRow}>
           <input
             className={colorInput}
@@ -79,14 +81,14 @@ export function EditForm({
               onColorPreview('');
             }}
           >
-            標準に戻す
+            {t('edit.reset')}
           </BaseButton>
         </span>
       </label>
       <div className={buttons}>
-        <BaseButton type="submit">保存</BaseButton>
+        <BaseButton type="submit">{t('edit.save')}</BaseButton>
         <BaseButton type="button" variant="secondary" onClick={onCancel}>
-          キャンセル
+          {t('edit.cancel')}
         </BaseButton>
       </div>
     </form>

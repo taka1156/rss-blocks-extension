@@ -1,0 +1,156 @@
+{
+  "common": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "untitled": "(Untitled)"
+  },
+  "addDialog": {
+    "tabsLabel": "Type to add",
+    "tabRss": "Add RSS",
+    "tabShortcut": "Add shortcut",
+    "feedUrlPlaceholder": "Enter feed URL (https://...)",
+    "shortcutUrlPlaceholder": "Enter shortcut URL"
+  },
+  "board": {
+    "ungroupedLabel": "Ungrouped feeds",
+    "groupsLabel": "Group list"
+  },
+  "settings": {
+    "invalidFormat": "Invalid settings file format",
+    "readFailed": "Failed to read the settings file",
+    "title": "Import / export settings",
+    "export": "Export settings",
+    "import": "Import settings file"
+  },
+  "group": {
+    "dropHere": "Drop a block here",
+    "dragToSort": "Drag to reorder",
+    "toggle": "Expand / collapse",
+    "untitled": "(Untitled group)",
+    "deleteTitle": "Delete group (blocks inside are kept)",
+    "deleteConfirm": "The group will be deleted (blocks inside stay outside the group).",
+    "nameLabel": "Group name",
+    "fallbackName": "Group",
+    "feedsLabel": "Feeds in {{title}}"
+  },
+  "feed": {
+    "loading": "Loading…",
+    "dragToMove": "Drag to move",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Leave empty to use the feed title",
+    "duplicateUrl": "That URL is already registered"
+  },
+  "edit": {
+    "borderColor": "Border color",
+    "reset": "Reset to default",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "article": {
+    "paneWidth": "Article pane width",
+    "closePlayer": "Close player",
+    "captionsLabel": "Captions",
+    "openInNewTab": "Open in new tab",
+    "title": "Article"
+  },
+  "shortcut": {
+    "remove": "Remove {{hostname}}",
+    "title": "Shortcuts",
+    "empty": "No shortcuts registered"
+  },
+  "item": {
+    "viewing": "Viewing",
+    "playing": "Playing",
+    "play": "Play"
+  },
+  "header": {
+    "add": "+ Add",
+    "addGroup": "+ Group",
+    "refresh": "Refresh",
+    "settings": "⚙ Settings",
+    "help": "? Help",
+    "sideToggle": "Open articles on the side",
+    "languageLabel": "Switch language",
+    "language": {
+      "ja": "日本語",
+      "en": "English"
+    }
+  },
+  "help": {
+    "features": {
+      "0": {
+        "title": "Manage many feeds on one screen",
+        "description": "Collect updates from Zenn, Qiita, news sites and more in one list, and cut the effort of staying informed."
+      },
+      "1": {
+        "title": "Organize with groups",
+        "description": "Sort feeds into work, hobbies, tech notes and more, then drag to reorder so you can find what you need fast."
+      },
+      "2": {
+        "title": "Read articles instantly",
+        "description": "Pick an article to read it in the article pane, or enable side view to skim alongside the feeds."
+      },
+      "3": {
+        "title": "Play audio content too",
+        "description": "Articles with an audio enclosure in the RSS can be played with a single button."
+      }
+    },
+    "steps": {
+      "0": {
+        "title": "Add RSS feeds or websites",
+        "text": "Use \"+ Add\" to register an RSS/Atom feed or a shortcut URL. Zenn, Qiita and others are available by default."
+      },
+      "1": {
+        "title": "Organize with groups",
+        "text": "Create categories with \"+ Group\" and organize your feeds. Reorder them the way you like for a smoother daily routine."
+      },
+      "2": {
+        "title": "Refresh and check",
+        "text": "Press \"Refresh\" to fetch new articles. Select one to preview it, and open it in a new tab if needed."
+      },
+      "3": {
+        "title": "Make the most of settings",
+        "text": "Thumbnails, side-by-side articles and settings export/import let you tailor the app to your style."
+      }
+    },
+    "actions": {
+      "0": {
+        "note": "Register RSS/Atom feeds and shortcuts"
+      },
+      "1": {
+        "note": "Organize information by category"
+      },
+      "2": {
+        "note": "Sync the latest articles"
+      },
+      "3": {
+        "note": "Back up and restore as JSON"
+      }
+    },
+    "heroTitle": "See all your RSS in one place and never miss what matters.",
+    "toHowTo": "How to use",
+    "toFeatures": "Features",
+    "toDashboard": "Go to dashboard",
+    "metricsLabel": "RSS Decks highlights",
+    "metrics": {
+      "0": {
+        "title": "Multiple sources",
+        "text": "Browse together"
+      },
+      "1": {
+        "title": "Real-time",
+        "text": "Instant updates"
+      },
+      "2": {
+        "title": "Articles + audio",
+        "text": "Read, listen, check"
+      }
+    },
+    "featuresTitle": "Clear, easy to use, never missing a thing.",
+    "howToTitle": "Simple controls you can start using in 5 minutes.",
+    "quickTitle": "Press a common button and get started",
+    "lead": "RSS Decks is an extension for checking many sources at once. Grasp work, hobby and tech news at a glance, read articles in place, listen to audio, and save what you need."
+  }
+}

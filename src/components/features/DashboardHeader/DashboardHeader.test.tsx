@@ -89,4 +89,18 @@ describe('DashboardHeader', () => {
     const settingsButton = buttons.find((button) => button.textContent?.includes('設定'));
     expect(settingsButton).toHaveAttribute('aria-haspopup', 'dialog');
   });
+
+  it('renders the language menu', () => {
+    render(<DashboardHeader {...defaultProps} />);
+    expect(screen.getByRole('button', { name: '言語を切り替える' })).toBeInTheDocument();
+  });
+
+  it('renders only the brand and language menu without dashboard handlers', () => {
+    render(<DashboardHeader />);
+    expect(screen.getByText('RSS Decks')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '言語を切り替える' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /追加/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /更新/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /ヘルプ/ })).not.toBeInTheDocument();
+  });
 });

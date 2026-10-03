@@ -1,0 +1,156 @@
+{
+  "common": {
+    "add": "追加",
+    "edit": "編集",
+    "delete": "削除",
+    "close": "閉じる",
+    "untitled": "(無題)"
+  },
+  "addDialog": {
+    "tabsLabel": "追加する種類",
+    "tabRss": "RSS追加",
+    "tabShortcut": "ショートカット追加",
+    "feedUrlPlaceholder": "フィードURLを入力 (https://...)",
+    "shortcutUrlPlaceholder": "ショートカットURLを入力"
+  },
+  "board": {
+    "ungroupedLabel": "未分類フィード",
+    "groupsLabel": "グループ一覧"
+  },
+  "settings": {
+    "invalidFormat": "設定ファイルの形式が正しくありません",
+    "readFailed": "設定ファイルを読み込めませんでした",
+    "title": "設定のインポート／エクスポート",
+    "export": "設定をエクスポート",
+    "import": "設定ファイルをインポート"
+  },
+  "group": {
+    "dropHere": "ここにブロックをドロップ",
+    "dragToSort": "ドラッグして並べ替え",
+    "toggle": "開閉",
+    "untitled": "(無題のグループ)",
+    "deleteTitle": "グループを削除（中のブロックは残ります）",
+    "deleteConfirm": "グループを削除します（中のブロックはグループ外に残ります）。",
+    "nameLabel": "グループ名",
+    "fallbackName": "グループ",
+    "feedsLabel": "{{title}} のフィード"
+  },
+  "feed": {
+    "loading": "読み込み中…",
+    "dragToMove": "ドラッグして移動",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "空欄ならフィードのタイトルを使用",
+    "duplicateUrl": "そのURLは既に登録されています"
+  },
+  "edit": {
+    "borderColor": "枠線の色",
+    "reset": "標準に戻す",
+    "save": "保存",
+    "cancel": "キャンセル"
+  },
+  "article": {
+    "paneWidth": "記事ペインの幅",
+    "closePlayer": "再生を閉じる",
+    "captionsLabel": "日本語の字幕",
+    "openInNewTab": "新しいタブで開く",
+    "title": "記事"
+  },
+  "shortcut": {
+    "remove": "{{hostname}} を削除",
+    "title": "ショートカット",
+    "empty": "登録されたショートカットはありません"
+  },
+  "item": {
+    "viewing": "閲覧中",
+    "playing": "再生中",
+    "play": "再生"
+  },
+  "header": {
+    "add": "＋ 追加",
+    "addGroup": "＋ グループ",
+    "refresh": "更新",
+    "settings": "⚙ 設定",
+    "help": "? ヘルプ",
+    "sideToggle": "記事を横で開く",
+    "languageLabel": "言語を切り替える",
+    "language": {
+      "ja": "日本語",
+      "en": "English"
+    }
+  },
+  "help": {
+    "features": {
+      "0": {
+        "title": "複数のRSSを1画面で管理",
+        "description": "Zenn、Qiita、ニュースサイトなど、気になる更新をまとめて一覧化。情報収集の手間を減らします。"
+      },
+      "1": {
+        "title": "グループで整理",
+        "description": "仕事、趣味、技術メモなどでフィードを分類し、ドラッグで並び替えれば見たい情報をすぐ見つけられます。"
+      },
+      "2": {
+        "title": "記事をすぐ確認",
+        "description": "記事を選ぶと記事ペインで読むことができ、横表示設定にすればサイドで流し読みも可能です。"
+      },
+      "3": {
+        "title": "音声コンテンツも再生",
+        "description": "RSS内に含まれる音声エンクロージャーがある記事なら、ボタン一つで再生して聞き流せます。"
+      }
+    },
+    "steps": {
+      "0": {
+        "title": "RSSやWebサイトを追加する",
+        "text": "「＋ 追加」からRSS/AtomフィードまたはショートカットURLを登録。初期状態ではZennやQiitaなども利用できます。"
+      },
+      "1": {
+        "title": "グループで整理する",
+        "text": "「＋ グループ」でカテゴリを作成し、フィードを整理。見たい順に並べ替えて、毎日の情報収集を快適に。"
+      },
+      "2": {
+        "title": "更新して確認する",
+        "text": "「更新」を押すと新着記事を取得。記事を選ぶと本文をプレビューでき、必要に応じて新しいタブで開けます。"
+      },
+      "3": {
+        "title": "設定を使いこなす",
+        "text": "サムネイル表示、記事の横並び表示、設定のエクスポート／インポートで、自分の見方に合わせて管理できます。"
+      }
+    },
+    "actions": {
+      "0": {
+        "note": "RSS/Atomフィードやショートカットを登録"
+      },
+      "1": {
+        "note": "情報をカテゴリ別に整理"
+      },
+      "2": {
+        "note": "新着記事を最新情報に同期"
+      },
+      "3": {
+        "note": "JSON形式でバックアップと復元"
+      }
+    },
+    "heroTitle": "RSSを1か所で見て、気になる情報を逃さない。",
+    "toHowTo": "使い方を見る",
+    "toFeatures": "機能一覧",
+    "toDashboard": "ダッシュボードへ",
+    "metricsLabel": "RSS Decks の特徴",
+    "metrics": {
+      "0": {
+        "title": "複数ソース",
+        "text": "まとめて閲覧"
+      },
+      "1": {
+        "title": "リアルタイム",
+        "text": "更新を即反映"
+      },
+      "2": {
+        "title": "記事+音声",
+        "text": "読み・聞き・確認"
+      }
+    },
+    "featuresTitle": "見やすく、使いやすく、逃さない。",
+    "howToTitle": "5分で使い始められる、シンプルな操作.",
+    "quickTitle": "よく使うボタンを押して、すぐに始めよう",
+    "lead": "RSS Decks は、複数の配信元をまとめてチェックできる拡張機能です。 仕事・趣味・技術情報をひと目で把握し、記事をその場で読む、音声を聞く、必要に応じて保存するまでをスムーズにします。"
+  }
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useCardDragState } from '@/hooks/useCardDragState';
 import { useColorPreview } from '@/hooks/useColorPreview';
 import { useEditState } from '@/hooks/useEditState';
@@ -55,6 +56,7 @@ export function GroupCard({
   statusByUrl,
   itemsByUrl,
 }: GroupCardProps) {
+  const { t } = useTranslation();
   const { editing, setEditing } = useEditState();
   const { dragReady, setDragReady, isDragging, setIsDragging, isOver, setIsOver } =
     useCardDragState();
@@ -95,7 +97,7 @@ export function GroupCard({
         {/* biome-ignore lint/a11y/noStaticElementInteractions: pointer-only drag handle */}
         <span
           className={handle}
-          title="ドラッグして並べ替え"
+          title={t('group.dragToSort')}
           onMouseDown={() => setDragReady(true)}
           onMouseUp={() => setDragReady(false)}
         >
@@ -104,17 +106,17 @@ export function GroupCard({
         <button
           type="button"
           className={toggle}
-          title="開閉"
+          title={t('group.toggle')}
           onClick={() => onToggleCollapse(groupData.id)}
         >
           {groupData.collapsed ? '▸' : '▾'}
         </button>
-        <h2 className={groupTitle}>{groupData.title || '(無題のグループ)'}</h2>
+        <h2 className={groupTitle}>{groupData.title || t('group.untitled')}</h2>
         <div className={actions}>
           <button
             type="button"
             className={icon}
-            title="編集"
+            title={t('common.edit')}
             onClick={() => (editing ? closeEdit() : setEditing(true))}
           >
             ✎
@@ -122,9 +124,9 @@ export function GroupCard({
           <button
             type="button"
             className={icon}
-            title="グループを削除（中のブロックは残ります）"
+            title={t('group.deleteTitle')}
             onClick={() => {
-              if (window.confirm('グループを削除します（中のブロックはグループ外に残ります）。')) {
+              if (window.confirm(t('group.deleteConfirm'))) {
                 onRemoveGroup(groupData.id);
               }
             }}
@@ -135,7 +137,7 @@ export function GroupCard({
       </div>
       {editing && (
         <EditForm
-          titleLabel="グループ名"
+          titleLabel={t('group.nameLabel')}
           titleRequired
           initial={{ title: groupData.title, url: '', color: groupData.color }}
           onColorPreview={setPreviewColor}
@@ -147,9 +149,10 @@ export function GroupCard({
         />
       )}
       <ul
+        data-empty-label={t('group.dropHere')}
         className={`${feedList} ${groupData.collapsed ? collapsedList : ''} ${isOver ? over : ''}`.trim()}
         data-group={groupData.id}
-        aria-label={`${groupData.title || 'グループ'} のフィード`}
+        aria-label={t('group.feedsLabel', { title: groupData.title || t('group.fallbackName') })}
         onDragOver={(event) => {
           event.preventDefault();
           setIsOver(event.dataTransfer.types.includes('application/rss-blocks-feed'));

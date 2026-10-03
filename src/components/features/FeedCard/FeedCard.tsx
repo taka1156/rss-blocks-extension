@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FeedItemRow } from '@/components/features/FeedItemRow/FeedItemRow';
 import { useCardDragState } from '@/hooks/useCardDragState';
 import { useColorPreview } from '@/hooks/useColorPreview';
@@ -47,6 +48,7 @@ export function FeedCard({
   onDragStart,
   onDrop,
 }: FeedCardProps) {
+  const { t } = useTranslation();
   const { editing, setEditing } = useEditState();
   const { dragReady, setDragReady, isDragging, setIsDragging } = useCardDragState();
   const { finalColor: borderColor, setPreviewColor, resetPreview } = useColorPreview(feed.color);
@@ -65,7 +67,7 @@ export function FeedCard({
     setPlayingAudioUrl(playingAudioUrl === url ? '' : url);
     onPlayAudio(title, url);
   };
-  const statusText = feedStatus?.loading ? '読み込み中…' : (feedStatus?.error ?? '');
+  const statusText = feedStatus?.loading ? t('feed.loading') : (feedStatus?.error ?? '');
 
   return (
     <li
@@ -93,7 +95,7 @@ export function FeedCard({
         {/* biome-ignore lint/a11y/noStaticElementInteractions: pointer-only drag handle */}
         <span
           className={handle}
-          title="ドラッグして移動"
+          title={t('feed.dragToMove')}
           onMouseDown={() => setDragReady(true)}
           onMouseUp={() => setDragReady(false)}
         >
@@ -107,7 +109,7 @@ export function FeedCard({
           <button
             type="button"
             className={icon}
-            title="編集"
+            title={t('common.edit')}
             onClick={() => (editing ? closeEdit() : setEditing(true))}
           >
             ✎
@@ -115,7 +117,7 @@ export function FeedCard({
           <button
             type="button"
             className={`${icon} ${removeIcon}`}
-            title="削除"
+            title={t('common.delete')}
             onClick={() => onRemove(feed.url)}
           >
             ×
@@ -124,8 +126,8 @@ export function FeedCard({
       </div>
       {editing && (
         <EditForm
-          titleLabel="タイトル"
-          titlePlaceholder="空欄ならフィードのタイトルを使用"
+          titleLabel={t('feed.titleLabel')}
+          titlePlaceholder={t('feed.titlePlaceholder')}
           showUrl
           initial={{ title: feed.title, url: feed.url, color: feed.color }}
           onColorPreview={setPreviewColor}

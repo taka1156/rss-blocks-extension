@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BaseButton } from '@/components/shared/BaseButton/BaseButton';
 import { BaseDialog } from '@/components/shared/BaseDialog/BaseDialog';
 import { BaseInput } from '@/components/shared/BaseInput/BaseInput';
@@ -29,6 +30,7 @@ function isDashboardState(value: unknown): value is Partial<DashboardState> {
 }
 
 export function SettingsDialog({ open, onOpenChange, onImport }: SettingsDialogProps) {
+  const { t } = useTranslation();
   const closeDialog = () => {
     onOpenChange(false);
   };
@@ -54,7 +56,7 @@ export function SettingsDialog({ open, onOpenChange, onImport }: SettingsDialogP
         const parsed = JSON.parse(text) as unknown;
 
         if (!isDashboardState(parsed)) {
-          window.alert('設定ファイルの形式が正しくありません');
+          window.alert(t('settings.invalidFormat'));
           event.target.value = '';
           return;
         }
@@ -136,17 +138,17 @@ export function SettingsDialog({ open, onOpenChange, onImport }: SettingsDialogP
         event.target.value = '';
         onOpenChange(false);
       } catch {
-        window.alert('設定ファイルを読み込めませんでした');
+        window.alert(t('settings.readFailed'));
         event.target.value = '';
       }
     },
-    [onImport, onOpenChange],
+    [onImport, onOpenChange, t],
   );
 
   return (
     <BaseDialog
       id="settingsPanel"
-      title="設定のインポート／エクスポート"
+      title={t('settings.title')}
       titleId="settingsPanelTitle"
       closeButtonId="settingsClose"
       bodyClassName={settingsBody}
@@ -155,10 +157,10 @@ export function SettingsDialog({ open, onOpenChange, onImport }: SettingsDialogP
       onClose={closeDialog}
     >
       <BaseButton id="exportSettings" type="button" onClick={() => void handleExport()}>
-        設定をエクスポート
+        {t('settings.export')}
       </BaseButton>
       <label className={importSettings} htmlFor="importSettings">
-        設定ファイルをインポート
+        {t('settings.import')}
         <BaseInput
           id="importSettings"
           type="file"

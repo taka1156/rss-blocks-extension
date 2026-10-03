@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BaseButton } from '@/components/shared/BaseButton/BaseButton';
 import {
   articleFrame,
@@ -32,6 +33,7 @@ export function ArticlePane({
   onCloseArticle,
   onCloseAudio,
 }: ArticlePaneProps) {
+  const { t } = useTranslation();
   const visible = Boolean(url || audioUrl);
   const paneRef = useRef<HTMLElement>(null);
   const [paneWidth, setPaneWidthState] = useState(() => Math.max(380, window.innerWidth * 0.42));
@@ -69,7 +71,7 @@ export function ArticlePane({
         id="paneResizeHandle"
         className={resizeHandle}
         aria-orientation="vertical"
-        aria-label="記事ペインの幅"
+        aria-label={t('article.paneWidth')}
         aria-valuemin={Math.round(minWidth)}
         aria-valuemax={Math.round(maxWidth)}
         aria-valuenow={paneWidth}
@@ -99,13 +101,19 @@ export function ArticlePane({
             id="audioClose"
             type="button"
             variant="icon"
-            title="再生を閉じる"
+            title={t('article.closePlayer')}
             onClick={onCloseAudio}
           >
             ×
           </BaseButton>
           <audio className={player} controls autoPlay src={audioUrl}>
-            <track kind="captions" srcLang="ja" label="日本語の字幕" src={emptyCaptions} default />
+            <track
+              kind="captions"
+              srcLang="ja"
+              label={t('article.captionsLabel')}
+              src={emptyCaptions}
+              default
+            />
           </audio>
         </div>
       )}
@@ -119,7 +127,7 @@ export function ArticlePane({
               id="articleOpen"
               type="button"
               variant="icon"
-              title="新しいタブで開く"
+              title={t('article.openInNewTab')}
               onClick={() => window.open(url, '_blank', 'noopener')}
             >
               ↗
@@ -128,7 +136,7 @@ export function ArticlePane({
               id="articleClose"
               type="button"
               variant="icon"
-              title="閉じる"
+              title={t('common.close')}
               onClick={onCloseArticle}
             >
               ×
@@ -139,7 +147,7 @@ export function ArticlePane({
             className={articleFrame}
             sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
             referrerPolicy="no-referrer"
-            title="記事"
+            title={t('article.title')}
             src={url}
           />
         </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { type FeedItem, formatFeedDate } from '@/utils/feedParser';
 import { icon } from '../FeedCard/FeedCard.css';
 import { itemBody, itemDate, itemLink, itemRow, itemStatus, itemThumb } from './FeedItemRow.css';
@@ -17,6 +18,7 @@ export function FeedItemRow({
   onOpenArticle,
   onPlayAudio,
 }: FeedItemRowProps) {
+  const { t } = useTranslation();
   return (
     <li className={itemRow} key={item.link || `${item.title}-${item.date}`}>
       {item.thumb && <img className={itemThumb} src={item.thumb} alt="" loading="lazy" />}
@@ -31,9 +33,9 @@ export function FeedItemRow({
             if (onOpenArticle(item.title, item.link)) event.preventDefault();
           }}
         >
-          {item.title || item.link || '(無題)'}
+          {item.title || item.link || t('common.untitled')}
         </a>
-        {isArticleOpen && <span className={itemStatus}>閲覧中</span>}
+        {isArticleOpen && <span className={itemStatus}>{t('item.viewing')}</span>}
         {formatFeedDate(item.date) && (
           <time className={itemDate} dateTime={item.date}>
             {formatFeedDate(item.date)}
@@ -43,10 +45,10 @@ export function FeedItemRow({
           <button
             type="button"
             className={icon}
-            title={isAudioPlaying ? '再生中' : '再生'}
+            title={isAudioPlaying ? t('item.playing') : t('item.play')}
             onClick={() => onPlayAudio(item.title, item.audio)}
           >
-            {isAudioPlaying ? '⏸' : '▶'} {isAudioPlaying && '再生中'}
+            {isAudioPlaying ? '⏸' : '▶'} {isAudioPlaying && t('item.playing')}
           </button>
         )}
       </div>

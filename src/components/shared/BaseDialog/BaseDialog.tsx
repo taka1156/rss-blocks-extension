@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BaseButton } from '@/components/shared/BaseButton/BaseButton';
 import { dialog, dialogBody, dialogHeader, dialogTitle } from './BaseDialog.css';
 
@@ -25,6 +26,7 @@ export function BaseDialog({
   onOpenChange,
   children,
 }: BaseDialogProps) {
+  const { t } = useTranslation();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const bodyClasses = [dialogBody, bodyClassName].filter(Boolean).join(' ');
 
@@ -73,7 +75,7 @@ export function BaseDialog({
           id={closeButtonId}
           type="button"
           variant="icon"
-          aria-label="閉じる"
+          aria-label={t('common.close')}
           onClick={handleClose}
         >
           ×

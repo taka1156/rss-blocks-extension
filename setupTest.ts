@@ -1,6 +1,9 @@
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+import i18n from './src/i18n';
+
+i18n.changeLanguage('ja');
 
 // jsdom does not implement showModal/close; toggle `open` so content is accessible.
 beforeEach(() => {
