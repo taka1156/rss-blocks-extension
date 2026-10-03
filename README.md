@@ -38,7 +38,7 @@ Feeds, groups, shortcuts, and display preferences are stored in `chrome.storage.
 
 - `storage`: Saves settings to Chrome sync storage.
 - `declarativeNetRequest`: Removes the `X-Frame-Options` and `Content-Security-Policy` response headers only for subframes loaded by the extension itself, so articles can be displayed in the extension's article pane.
-- Access to all hosts: Used to fetch arbitrary feeds and their images, audio, and other content.
+- Optional host access (`http://*/*`, `https://*/*`): Not granted at install. Chrome asks for access to each site's origin when you add or import a feed, refresh, or open an article, so feeds can be fetched and articles displayed. Denying it only affects that site.
 
 Feed content and linked pages are retrieved from external websites. Review the URLs you register and the content of articles displayed in embedded views.
 

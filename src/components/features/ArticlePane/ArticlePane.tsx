@@ -21,6 +21,9 @@ type ArticlePaneProps = {
   onCloseAudio: () => void;
 };
 
+// Feed audio has no captions; an empty WebVTT keeps the track valid without an empty src.
+const emptyCaptions = 'data:text/vtt,WEBVTT';
+
 export function ArticlePane({
   title,
   url,
@@ -102,7 +105,7 @@ export function ArticlePane({
             ×
           </BaseButton>
           <audio className={player} controls autoPlay src={audioUrl}>
-            <track kind="captions" srcLang="ja" label="日本語の字幕" src="" default />
+            <track kind="captions" srcLang="ja" label="日本語の字幕" src={emptyCaptions} default />
           </audio>
         </div>
       )}

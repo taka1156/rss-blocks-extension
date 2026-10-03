@@ -12,6 +12,7 @@ import { useFeedRefresh } from '@/hooks/useFeedRefresh.js';
 import { useGroupActions } from '@/hooks/useGroupActions.js';
 import { useShortcutActions } from '@/hooks/useShortcutActions.js';
 import { saveDashboardState, saveShortcuts } from '@/storage/feedDashboard';
+import { requestHostAccess } from '@/utils/hostPermission';
 
 export default function Feed() {
   const feedState = useFeedActions();
@@ -51,6 +52,7 @@ export default function Feed() {
 
   const addFeed = useCallback(
     async (url: string) => {
+      if (!(await requestHostAccess([url]))) return { ok: false as const, reason: 'denied' };
       const result = feedState.addFeed(url);
       if (result.ok) {
         await saveDashboardState(result.nextFeeds, groupState.groups);
@@ -89,7 +91,11 @@ export default function Feed() {
         onOpenAddPanel={() => setAddDialogOpen(true)}
         onOpenSettingsPanel={() => setSettingsDialogOpen(true)}
         onAddGroup={addGroup}
-        onRefresh={() => void feedRefresh.refreshAll()}
+        onRefresh={() => {
+          void requestHostAccess(feedState.feeds.map((feed) => feed.url)).then(() =>
+            feedRefresh.refreshAll(),
+          );
+        }}
         onSideOpenChange={(checked) => {
           void persistence.persistFlags(checked);
         }}
@@ -109,7 +115,8 @@ export default function Feed() {
       <SettingsDialog
         open={settingsDialogOpen}
         onOpenChange={setSettingsDialogOpen}
-        onImport={(nextState) => {
+        onImport={async (nextState) => {
+          await requestHostAccess(nextState.feeds.map((feed) => feed.url));
           feedState.setFeeds(nextState.feeds);
           groupState.loadGroups(nextState.groups);
           shortcutState.loadShortcuts(nextState.shortcuts);
@@ -134,7 +141,10 @@ export default function Feed() {
         itemsByUrl={feedRefresh.itemsByUrl}
         onOpenArticle={(title, url) => {
           if (!sideOpen) return false;
-          setArticle({ title, url });
+          void requestHostAccess([url]).then((granted) => {
+            if (granted) setArticle({ title, url });
+            else window.open(url, '_blank', 'noopener');
+          });
           return true;
         }}
         onPlayAudio={(label, url) => setAudio({ label, url })}
@@ -147,6 +157,7 @@ export default function Feed() {
         }}
         onUpdateFeed={(url, patch) => {
           const nextUrl = patch.url || url;
+          if (nextUrl !== url) void requestHostAccess([nextUrl]);
           if (feedState.feeds.some((feed) => feed.url === nextUrl && feed.url !== url)) {
             window.alert('そのURLは既に登録されています');
             return false;
