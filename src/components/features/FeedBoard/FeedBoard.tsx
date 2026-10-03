@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { EditValues } from '@/components/features/EditForm/EditForm';
 import { FeedCard } from '@/components/features/FeedCard/FeedCard';
 import { GroupCard } from '@/components/features/GroupCard/GroupCard';
@@ -38,6 +39,7 @@ export function FeedBoard({
   onToggleGroupCollapse,
   onMoveGroup,
 }: FeedBoardProps) {
+  const { t } = useTranslation();
   const [ungroupedOver, setUngroupedOver] = useState(false);
   const groupedFeeds = useMemo(
     () => ({
@@ -67,7 +69,7 @@ export function FeedBoard({
         className={`${grid} ${ungroupedOver ? over : ''}`.trim()}
         id="ungroupedGrid"
         data-group=""
-        aria-label="未分類フィード"
+        aria-label={t('board.ungroupedLabel')}
         onDragOver={(event) => {
           event.preventDefault();
           setUngroupedOver(event.dataTransfer.types.includes('application/rss-blocks-feed'));
@@ -102,7 +104,7 @@ export function FeedBoard({
         ))}
       </ul>
 
-      <ul id="groups" className={groupsClass} aria-label="グループ一覧">
+      <ul id="groups" className={groupsClass} aria-label={t('board.groupsLabel')}>
         {groupedFeeds.grouped.map((entry) => (
           <GroupCard
             key={entry.group.id}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BaseButton } from '@/components/shared/BaseButton/BaseButton';
 import { BaseDialog } from '@/components/shared/BaseDialog/BaseDialog';
 import { BaseInput } from '@/components/shared/BaseInput/BaseInput';
@@ -17,6 +18,7 @@ export function AddFeedDialog({
   onSubmitFeed,
   onSubmitShortcut,
 }: AddFeedDialogProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'feed' | 'shortcut'>('feed');
 
   useEffect(() => {
@@ -32,14 +34,14 @@ export function AddFeedDialog({
   return (
     <BaseDialog
       id="addPanel"
-      title="追加"
+      title={t('common.add')}
       titleId="addPanelTitle"
       closeButtonId="addPanelClose"
       open={open}
       onOpenChange={onOpenChange}
       onClose={closeDialog}
     >
-      <div className={tabList} role="tablist" aria-label="追加する種類">
+      <div className={tabList} role="tablist" aria-label={t('addDialog.tabsLabel')}>
         <BaseButton
           id="feedTab"
           className={tabButton}
@@ -49,7 +51,7 @@ export function AddFeedDialog({
           aria-selected={activeTab === 'feed'}
           onClick={() => setActiveTab('feed')}
         >
-          RSS追加
+          {t('addDialog.tabRss')}
         </BaseButton>
         <BaseButton
           id="shortcutTab"
@@ -61,7 +63,7 @@ export function AddFeedDialog({
           tabIndex={activeTab === 'shortcut' ? 0 : -1}
           onClick={() => setActiveTab('shortcut')}
         >
-          ショートカット追加
+          {t('addDialog.tabShortcut')}
         </BaseButton>
       </div>
       {activeTab === 'feed' && (
@@ -87,11 +89,11 @@ export function AddFeedDialog({
               className={input}
               name="urlInput"
               type="url"
-              placeholder="フィードURLを入力 (https://...)"
+              placeholder={t('addDialog.feedUrlPlaceholder')}
               required
             />
             <BaseButton id="addBtn" type="submit">
-              追加
+              {t('common.add')}
             </BaseButton>
           </form>
         </div>
@@ -119,10 +121,10 @@ export function AddFeedDialog({
               className={input}
               name="shortcutUrl"
               type="url"
-              placeholder="ショートカットURLを入力"
+              placeholder={t('addDialog.shortcutUrlPlaceholder')}
               required
             />
-            <BaseButton type="submit">追加</BaseButton>
+            <BaseButton type="submit">{t('common.add')}</BaseButton>
           </form>
         </div>
       )}

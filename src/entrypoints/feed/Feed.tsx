@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AddFeedDialog } from '@/components/features/AddFeedDialog/AddFeedDialog.js';
 import { ArticlePane } from '@/components/features/ArticlePane/ArticlePane.js';
 import { DashboardHeader } from '@/components/features/DashboardHeader/DashboardHeader.js';
@@ -15,6 +16,7 @@ import { saveDashboardState, saveShortcuts } from '@/storage/feedDashboard';
 import { requestHostAccess } from '@/utils/hostPermission';
 
 export default function Feed() {
+  const { t } = useTranslation();
   const feedState = useFeedActions();
   const groupState = useGroupActions();
   const shortcutState = useShortcutActions();
@@ -159,7 +161,7 @@ export default function Feed() {
           const nextUrl = patch.url || url;
           if (nextUrl !== url) void requestHostAccess([nextUrl]);
           if (feedState.feeds.some((feed) => feed.url === nextUrl && feed.url !== url)) {
-            window.alert('そのURLは既に登録されています');
+            window.alert(t('feed.duplicateUrl'));
             return false;
           }
           const result = feedState.updateFeed(url, { ...patch, url: nextUrl });

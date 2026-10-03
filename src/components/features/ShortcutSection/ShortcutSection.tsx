@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   entry,
   fallback,
@@ -12,6 +13,7 @@ import {
 } from './ShortcutSection.css';
 
 function ShortcutEntry({ url, onRemove }: { url: string; onRemove: (url: string) => void }) {
+  const { t } = useTranslation();
   const [iconFailed, setIconFailed] = useState(false);
   let parsed: URL;
   try {
@@ -45,8 +47,8 @@ function ShortcutEntry({ url, onRemove }: { url: string; onRemove: (url: string)
       <button
         type="button"
         className={removeButton}
-        aria-label={`${hostname} を削除`}
-        title={`${hostname} を削除`}
+        aria-label={t('shortcut.remove', { hostname })}
+        title={t('shortcut.remove', { hostname })}
         onClick={() => onRemove(url)}
       >
         ×
@@ -61,16 +63,17 @@ type ShortcutSectionProps = {
 };
 
 export function ShortcutSection({ shortcuts, onRemoveShortcut }: ShortcutSectionProps) {
+  const { t } = useTranslation();
   return (
     <section id="shortcuts" className={section} aria-labelledby="shortcutsTitle">
       <div className={toolbar}>
         <h2 id="shortcutsTitle" className={toolbarTitle}>
-          ショートカット
+          {t('shortcut.title')}
         </h2>
       </div>
       <div id="shortcutList" className={list}>
         {shortcuts.length === 0 ? (
-          <span>登録されたショートカットはありません</span>
+          <span>{t('shortcut.empty')}</span>
         ) : (
           shortcuts.map((shortcut) => (
             <ShortcutEntry key={shortcut.url} url={shortcut.url} onRemove={onRemoveShortcut} />

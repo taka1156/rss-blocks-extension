@@ -74,7 +74,7 @@ export const feedList = style({
   minHeight: '90px',
   selectors: {
     '&:empty::after': {
-      content: "'ここにブロックをドロップ'",
+      content: 'attr(data-empty-label)',
       width: '292px',
       padding: '28px 0',
       border: '1px dashed var(--line)',

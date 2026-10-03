@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { entry, fallback, icon, link, removeButton } from './ShortcutEntry.css';
 
 type ShortcutEntryProps = {
@@ -7,6 +8,7 @@ type ShortcutEntryProps = {
 };
 
 export function ShortcutEntry({ url, onRemove }: ShortcutEntryProps) {
+  const { t } = useTranslation();
   const [iconFailed, setIconFailed] = useState(false);
   let parsed: URL;
   try {
@@ -40,8 +42,8 @@ export function ShortcutEntry({ url, onRemove }: ShortcutEntryProps) {
       <button
         type="button"
         className={removeButton}
-        aria-label={`${hostname} を削除`}
-        title={`${hostname} を削除`}
+        aria-label={t('shortcut.remove', { hostname })}
+        title={t('shortcut.remove', { hostname })}
         onClick={() => onRemove(url)}
       >
         ×
