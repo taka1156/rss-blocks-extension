@@ -4,7 +4,7 @@ import { useCardDragState } from '@/hooks/useCardDragState';
 import { useColorPreview } from '@/hooks/useColorPreview';
 import { useEditState } from '@/hooks/useEditState';
 import type { Feed } from '@/storage/feedDashboard';
-import type { FeedItem } from '@/utils/feedDashboard';
+import type { FeedItem } from '@/utils/feedParser';
 import { EditForm, type EditValues } from '../EditForm/EditForm';
 import {
   actions,
@@ -146,7 +146,7 @@ export function FeedCard({
             <FeedItemRow
               key={item.link || `${item.title}-${item.date}`}
               item={item}
-              isArticleOpen={openArticleUrl === item.link}
+              isArticleOpen={!!item.link && openArticleUrl === item.link}
               isAudioPlaying={playingAudioUrl === item.audio}
               onOpenArticle={handleOpenArticle}
               onPlayAudio={handlePlayAudio}

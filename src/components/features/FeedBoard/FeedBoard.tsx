@@ -4,7 +4,7 @@ import { FeedCard } from '@/components/features/FeedCard/FeedCard';
 import { GroupCard } from '@/components/features/GroupCard/GroupCard';
 import { useFeedDragAndDrop } from '@/hooks/useFeedDragAndDrop';
 import type { Feed, Group } from '@/storage/feedDashboard';
-import type { FeedItem } from '@/utils/feedDashboard';
+import type { FeedItem } from '@/utils/feedParser';
 import { grid, groups as groupsClass, main, over } from './FeedBoard.css';
 
 type FeedBoardProps = {
@@ -42,12 +42,10 @@ export function FeedBoard({
   const groupedFeeds = useMemo(
     () => ({
       ungrouped: feeds.filter((feed) => !feed.group),
-      grouped: groups
-        .map((group) => ({
-          group,
-          feeds: feeds.filter((feed) => feed.group === group.id),
-        }))
-        .filter((entry) => entry.feeds.length > 0),
+      grouped: groups.map((group) => ({
+        group,
+        feeds: feeds.filter((feed) => feed.group === group.id),
+      })),
     }),
     [feeds, groups],
   );

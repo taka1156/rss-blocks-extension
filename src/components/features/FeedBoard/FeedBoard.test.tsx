@@ -72,7 +72,7 @@ describe('FeedBoard', () => {
     expect(screen.getByText('News Group')).toBeInTheDocument();
   });
 
-  it('filters empty groups', () => {
+  it('shows groups that have no feeds', () => {
     const groupsWithEmpty: Group[] = [
       ...mockGroups,
       {
@@ -85,7 +85,13 @@ describe('FeedBoard', () => {
     const feedsWithoutEmpty = mockFeeds.filter((f) => f.group !== 'group2');
 
     render(<FeedBoard {...defaultProps} feeds={feedsWithoutEmpty} groups={groupsWithEmpty} />);
-    expect(screen.queryByText('Empty Group')).not.toBeInTheDocument();
+    expect(screen.getByText('Empty Group')).toBeInTheDocument();
+  });
+
+  it('shows a newly added group when there are no feeds at all', () => {
+    const newGroup: Group = { id: 'new', title: '新しいグループ', color: '', collapsed: false };
+    render(<FeedBoard {...defaultProps} feeds={[]} groups={[newGroup]} />);
+    expect(screen.getByText('新しいグループ')).toBeInTheDocument();
   });
 
   it('shows collapsed groups', () => {
@@ -135,7 +141,8 @@ describe('FeedBoard', () => {
 
   it('renders with empty feeds list', () => {
     render(<FeedBoard {...defaultProps} feeds={[]} />);
-    expect(screen.queryByText('News Group')).not.toBeInTheDocument();
+    expect(screen.queryByText('Grouped Feed 1')).not.toBeInTheDocument();
+    expect(screen.getByText('News Group')).toBeInTheDocument();
   });
 
   it('renders with empty groups list', () => {

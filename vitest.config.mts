@@ -22,6 +22,7 @@ export default defineConfig({
         lines: 90,
       },
     },
+    pool: 'vmThreads',
   },
   resolve: {
     alias: {

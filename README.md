@@ -1,6 +1,6 @@
 [日本語版はこちら](README.ja.md)
 
-# RSS Blocks
+# RSS Decks
 
 A Chrome extension for organizing multiple RSS/Atom feeds into blocks. View articles in the extension or play audio enclosures, such as podcasts.
 
@@ -20,7 +20,7 @@ A Chrome extension for organizing multiple RSS/Atom feeds into blocks. View arti
 4. Open `chrome://extensions` in Chrome.
 5. Enable **Developer mode**.
 6. Select **Load unpacked** and choose the generated `.output/chrome-mv3` folder.
-7. Open RSS Blocks by clicking its toolbar icon.
+7. Open RSS Decks by clicking its toolbar icon.
 
 ## Usage
 

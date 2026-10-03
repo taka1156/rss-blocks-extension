@@ -1,5 +1,5 @@
 import '@/styles/theme.css';
-import './Help.css';
+import * as styles from './Help.css';
 
 const features = [
   {
@@ -56,88 +56,96 @@ const quickActions = [
 
 export default function Help() {
   return (
-    <main className="help-page">
-      <section className="hero">
-        <div className="hero__inner">
-          <p className="eyebrow">RSS Blocks</p>
-          <h1>RSSを1か所で見て、気になる情報を逃さない。</h1>
-          <p className="lead">
-            RSS Blocks は、複数の配信元をまとめてチェックできる拡張機能です。
+    <main className={styles.helpPage}>
+      <section className={styles.hero}>
+        <div className={styles.heroInner}>
+          <p className={styles.eyebrow}>RSS Decks</p>
+          <h1 className={styles.heroTitle}>RSSを1か所で見て、気になる情報を逃さない。</h1>
+          <p className={styles.lead}>
+            RSS Decks は、複数の配信元をまとめてチェックできる拡張機能です。
             仕事・趣味・技術情報をひと目で把握し、記事をその場で読む、音声を聞く、必要に応じて保存するまでをスムーズにします。
           </p>
-          <div className="hero__actions">
-            <a href="#how-to-use" className="button button--primary">
+          <div className={styles.heroActions}>
+            <a href="#how-to-use" className={`${styles.button} ${styles.buttonPrimary}`}>
               使い方を見る
             </a>
-            <a href="#features" className="button button--secondary">
+            <a href="#features" className={`${styles.button} ${styles.buttonSecondary}`}>
               機能一覧
             </a>
+            <a href="/feed.html" className={`${styles.button} ${styles.buttonSecondary}`}>
+              ダッシュボードへ
+            </a>
           </div>
-          <ul className="metrics" aria-label="RSS Blocks の特徴">
-            <li>
-              <strong>複数ソース</strong>
-              <span>まとめて閲覧</span>
+          <ul className={styles.metrics} aria-label="RSS Decks の特徴">
+            <li className={styles.metricsItem}>
+              <strong className={styles.metricsStrong}>複数ソース</strong>
+              <span className={styles.metricsText}>まとめて閲覧</span>
             </li>
-            <li>
-              <strong>リアルタイム</strong>
-              <span>更新を即反映</span>
+            <li className={styles.metricsItem}>
+              <strong className={styles.metricsStrong}>リアルタイム</strong>
+              <span className={styles.metricsText}>更新を即反映</span>
             </li>
-            <li>
-              <strong>記事+音声</strong>
-              <span>読み・聞き・確認</span>
+            <li className={styles.metricsItem}>
+              <strong className={styles.metricsStrong}>記事+音声</strong>
+              <span className={styles.metricsText}>読み・聞き・確認</span>
             </li>
           </ul>
         </div>
       </section>
 
-      <section id="features" className="section">
-        <div className="section__header">
-          <p className="eyebrow">Features</p>
-          <h2>見やすく、使いやすく、逃さない。</h2>
+      <section id="features" className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <p className={styles.eyebrow}>Features</p>
+          <h2 className={styles.sectionTitle}>見やすく、使いやすく、逃さない。</h2>
         </div>
-        <div className="feature-grid">
+        <div className={styles.featureGrid}>
           {features.map((feature) => (
-            <article key={feature.title} className="feature-card">
-              <div className="feature-card__badge" aria-hidden="true">
+            <article key={feature.title} className={styles.featureCard}>
+              <div className={styles.featureCardBadge} aria-hidden="true">
                 ✓
               </div>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
+              <h3 className={styles.featureCardTitle}>{feature.title}</h3>
+              <p className={styles.bodyText}>{feature.description}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="how-to-use" className="section section--alt">
-        <div className="section__header">
-          <p className="eyebrow">How to use</p>
-          <h2>5分で使い始められる、シンプルな操作.</h2>
+      <section id="how-to-use" className={`${styles.section} ${styles.sectionAlt}`}>
+        <div className={styles.sectionHeader}>
+          <p className={styles.eyebrow}>How to use</p>
+          <h2 className={styles.sectionTitle}>5分で使い始められる、シンプルな操作.</h2>
         </div>
-        <div className="steps">
+        <div className={styles.steps}>
           {steps.map((step) => (
-            <div key={step.label} className="step">
-              <span className="step__label">{step.label}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
+            <div key={step.label} className={styles.step}>
+              <span className={styles.stepLabel}>{step.label}</span>
+              <h3 className={styles.stepTitle}>{step.title}</h3>
+              <p className={styles.bodyText}>{step.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="section">
-        <div className="callout">
+      <section className={styles.section}>
+        <div className={styles.callout}>
           <div>
-            <p className="eyebrow">Quick actions</p>
-            <h2>よく使うボタンを押して、すぐに始めよう</h2>
+            <p className={styles.eyebrow}>Quick actions</p>
+            <h2 className={styles.calloutTitle}>よく使うボタンを押して、すぐに始めよう</h2>
           </div>
-          <div className="action-list">
+          <div className={styles.actionList}>
             {quickActions.map((action) => (
-              <div key={action.name} className="action-item">
-                <span>{action.name}</span>
-                <small>{action.note}</small>
+              <div key={action.name} className={styles.actionItem}>
+                <span className={styles.actionItemName}>{action.name}</span>
+                <small className={styles.bodyText}>{action.note}</small>
               </div>
             ))}
           </div>
+        </div>
+        <div className={styles.heroActions}>
+          <a href="/feed.html" className={`${styles.button} ${styles.buttonPrimary}`}>
+            ダッシュボードへ
+          </a>
         </div>
       </section>
     </main>

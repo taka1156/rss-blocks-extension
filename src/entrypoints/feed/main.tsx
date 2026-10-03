@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import Feed from './feed/Feed';
+import Feed from './Feed';
 import '@/styles/theme.css';
 
 const rootElement = document.getElementById('root');

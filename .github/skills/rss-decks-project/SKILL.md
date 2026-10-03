@@ -1,13 +1,13 @@
 ---
-name: rss-blocks-project
-description: "Use when working on RSS Blocks: its Chrome extension architecture, RSS/Atom feed rendering, shortcuts, groups, article and audio panes, sync storage, settings import/export, or permissions."
+name: rss-decks-project
+description: "Use when working on RSS Decks: its Chrome extension architecture, RSS/Atom feed rendering, shortcuts, groups, article and audio panes, sync storage, settings import/export, or permissions."
 ---
 
-# RSS Blocks Project Overview
+# RSS Decks Project Overview
 
 ## Project
 
-RSS Blocks is a Manifest V3 Chrome extension built with **WXT** that opens a local extension page for organizing RSS and Atom feeds as blocks. The interface and user-facing messages are primarily Japanese. The project uses TypeScript, React, and Vanilla Extract for styling.
+RSS Decks is a Manifest V3 Chrome extension built with **WXT** that opens a local extension page for organizing RSS and Atom feeds as blocks. The interface and user-facing messages are primarily Japanese. The project uses TypeScript, React, and Vanilla Extract for styling.
 
 ## Build & Architecture
 

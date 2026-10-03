@@ -35,3 +35,9 @@ export const itemDate = style({
   color: 'var(--muted)',
   fontSize: '11px',
 });
+
+export const itemStatus = style({
+  padding: '2px 8px',
+  color: 'var(--muted)',
+  fontSize: '16px',
+});

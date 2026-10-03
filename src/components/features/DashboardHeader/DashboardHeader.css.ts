@@ -8,6 +8,17 @@ export const header = style({
   padding: '16px 24px',
 });
 
+export const brand = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+});
+
+export const brandIcon = style({
+  width: '28px',
+  height: '28px',
+});
+
 export const title = style({
   margin: 0,
   fontSize: '20px',
@@ -26,4 +37,8 @@ export const checkLabel = style({
   gap: '4px',
   fontSize: '13px',
   cursor: 'pointer',
+});
+
+export const helpLink = style({
+  textDecoration: 'none',
 });
