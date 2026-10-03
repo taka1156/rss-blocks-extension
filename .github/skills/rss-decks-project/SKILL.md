@@ -7,13 +7,15 @@ description: "Use when working on RSS Decks: its Chrome extension architecture, 
 
 ## Project
 
-RSS Decks is a Manifest V3 Chrome extension built with **WXT** that opens a local extension page for organizing RSS and Atom feeds as blocks. The interface and user-facing messages are primarily Japanese. The project uses TypeScript, React, and Vanilla Extract for styling.
+RSS Decks is a Manifest V3 Chrome extension built with **WXT** that opens a local extension page for organizing RSS and Atom feeds as blocks. The interface supports Japanese and English (i18next). The project uses TypeScript, React, and Vanilla Extract for styling.
 
 ## Build & Architecture
 
 - **Build system**: WXT (Web extension template)
 - **Language**: TypeScript
-- **UI Framework**: React 18
+- **UI Framework**: React 19
+- **i18n**: i18next + react-i18next (`ja`, `en`)
+- **Testing**: Vitest + Testing Library (`yarn test`, setup in `setupTest.ts`)
 - **Styling**: Vanilla Extract CSS-in-TS
 - **Package manager**: Yarn
 - **Linter**: Biome
@@ -21,15 +23,16 @@ RSS Decks is a Manifest V3 Chrome extension built with **WXT** that opens a loca
 ### Key Files & Directories
 
 - `wxt.config.ts`: WXT build configuration
-- `src/entrypoints/`: WXT entrypoints (background, content, feed, help pages)
-- `src/entrypoints/index.html` & `src/entrypoints/index.tsx`: Main extension popup/dashboard
+- `src/entrypoints/`: WXT entrypoints (background, feed, help pages)
 - `src/entrypoints/feed/Feed.tsx`: Main dashboard component for feed management
 - `src/entrypoints/help/Help.tsx`: Help page
 - `src/entrypoints/background.ts`: Service worker
-- `src/entrypoints/content.ts`: Content script
 - `src/components/`: React components (feature and shared)
 - `src/hooks/`: Custom React hooks for state management
 - `src/storage/`: Chrome Storage API abstractions
+- `src/utils/`: Utilities (`feedParser.ts`, `hostPermission.ts` with `requestHostAccess`)
+- `src/i18n.ts`: i18next setup; language persisted in `localStorage` (`rss-decks-language`), defaults to browser language (`ja` or `en`), fallback `ja`
+- `src/locales/{ja,en}/translation.json`: Translation strings (keep both in sync)
 - `src/styles/`: Theme and global styles
 - `rss-blocks-settings.json`: Settings schema/defaults
 - `tsconfig.json`: TypeScript configuration
@@ -42,6 +45,7 @@ RSS Decks is a Manifest V3 Chrome extension built with **WXT** that opens a loca
 - **Article & Audio Panes**: Opens articles in an embedded side pane with audio player
 - **Feed Blocks**: Editable title, URL, border color; drag-and-drop reordering; group assignment
 - **Shortcuts**: Website shortcuts with icon fallback
+- **Language**: `LanguageMenu` switches between Japanese and English
 - **Settings**: JSON export/import for feeds, groups, shortcuts, and UI preferences
 - **Preferences**: Thumbnail visibility toggle and embedded article-pane mode toggle
 
@@ -59,7 +63,7 @@ The settings JSON export includes `feeds`, `groups`, and `shortcuts` (not `thumb
 
 ## Network and Security Notes
 
-- The manifest grants `storage`, `declarativeNetRequest`, and `<all_urls>` host access for fetching arbitrary feeds and remote assets
+- The manifest grants `storage`, `alarms`, and `declarativeNetRequest`; host access (`http://*/*`, `https://*/*`) is **optional** and requested at runtime per origin via `requestHostAccess` (must be called synchronously in a user gesture) when adding/importing/refreshing feeds or opening articles
 - Service worker removes `X-Frame-Options` and `Content-Security-Policy` headers for article iframes (scoped to extension initiator and subframe type)
 - Article and shortcut links use `noopener noreferrer` when opened in new tabs
 
@@ -68,7 +72,9 @@ The settings JSON export includes `feeds`, `groups`, and `shortcuts` (not `thumb
 - **Build**: `yarn build` (WXT handles bundling for Chrome MV3)
 - **Dev**: `yarn dev` (watch mode with hot reload)
 - **Lint**: `yarn lint` (Biome)
-- **Type check**: TypeScript via `tsconfig.json`
+- **Test**: `yarn test` (Vitest)
+- **Type check**: `yarn compile`
+- All user-facing strings go through `t()` with keys in both locale files
 - Maintain React component modularity in `src/components/`
 - Use custom hooks in `src/hooks/` for reusable state logic
 - Store Chrome API abstractions in `src/storage/`
