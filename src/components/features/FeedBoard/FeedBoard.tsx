@@ -42,12 +42,10 @@ export function FeedBoard({
   const groupedFeeds = useMemo(
     () => ({
       ungrouped: feeds.filter((feed) => !feed.group),
-      grouped: groups
-        .map((group) => ({
-          group,
-          feeds: feeds.filter((feed) => feed.group === group.id),
-        }))
-        .filter((entry) => entry.feeds.length > 0),
+      grouped: groups.map((group) => ({
+        group,
+        feeds: feeds.filter((feed) => feed.group === group.id),
+      })),
     }),
     [feeds, groups],
   );
